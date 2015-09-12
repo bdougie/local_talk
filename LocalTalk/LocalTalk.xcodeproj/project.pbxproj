@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
 		33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDB1BA0656500E043AE /* AppDelegate.swift */; };
 		33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDD1BA0656500E043AE /* ViewController.swift */; };
 		33D2CBE11BA0656500E043AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBDF1BA0656500E043AE /* Main.storyboard */; };
@@ -26,6 +27,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
 		33D2CBD61BA0656500E043AE /* LocalTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D2CBDA1BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBDB1BA0656500E043AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -77,9 +79,10 @@
 		33D2CBD81BA0656500E043AE /* LocalTalk */ = {
 			isa = PBXGroup;
 			children = (
+				33D2CBFB1BA0680E00E043AE /* Controllers */,
 				33D2CBDB1BA0656500E043AE /* AppDelegate.swift */,
-				33D2CBDD1BA0656500E043AE /* ViewController.swift */,
 				33D2CBDF1BA0656500E043AE /* Main.storyboard */,
+				33113C071BA30B8000A88277 /* ConversationData.swift */,
 				33D2CBE21BA0656500E043AE /* Images.xcassets */,
 				33D2CBE41BA0656500E043AE /* LaunchScreen.xib */,
 				33D2CBD91BA0656500E043AE /* Supporting Files */,
@@ -110,6 +113,14 @@
 				33D2CBF01BA0656500E043AE /* Info.plist */,
 			);
 			name = "Supporting Files";
+			sourceTree = "<group>";
+		};
+		33D2CBFB1BA0680E00E043AE /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				33D2CBDD1BA0656500E043AE /* ViewController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -213,6 +224,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */,
+				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
 				33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -409,6 +421,7 @@
 				33D2CBF71BA0656500E043AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		33D2CBF81BA0656500E043AE /* Build configuration list for PBXNativeTarget "LocalTalkTests" */ = {
 			isa = XCConfigurationList;
@@ -417,6 +430,7 @@
 				33D2CBFA1BA0656500E043AE /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
