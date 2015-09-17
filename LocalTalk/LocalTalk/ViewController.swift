@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ViewController: UIViewController {
     @IBOutlet weak var Conversations : ConversationData?
     @IBOutlet weak var addConversation: UIBarButtonItem!

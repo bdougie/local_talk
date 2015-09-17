@@ -8,7 +8,6 @@
 
 import UIKit
 
-
 class ConversationData: NSObject, UICollectionViewDataSource {
 //    var conversations: Array<NSObject>
 //    
