@@ -52,18 +52,86 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Local Talk" id="3u5-2h-IF7">
-                        <barButtonItem key="rightBarButtonItem" image="Plus Math-50" id="rTT-tS-fqt"/>
+                        <barButtonItem key="rightBarButtonItem" image="Plus Math-50" id="rTT-tS-fqt">
+                            <connections>
+                                <action selector="addSession:" destination="vXZ-lx-hvc" id="GLe-IZ-DC5"/>
+                                <segue destination="OPY-B4-8ln" kind="presentation" id="hPJ-Xy-agD"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="Conversations" destination="HHa-Bk-Y7i" id="oXS-wg-LgW"/>
-                        <outlet property="addConversation" destination="rTT-tS-fqt" id="uNe-iW-GUj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="x5A-6p-PRh" sceneMemberID="firstResponder"/>
                 <customObject id="HHa-Bk-Y7i" customClass="ConversationData" customModule="LocalTalk" customModuleProvider="target"/>
             </objects>
-            <point key="canvasLocation" x="1116.5" y="379.5"/>
+            <point key="canvasLocation" x="1140.5" y="405.5"/>
+        </scene>
+        <!--Session View Controller-->
+        <scene sceneID="gN5-xH-vbv">
+            <objects>
+                <viewController id="EnU-sa-oNj" customClass="SessionViewController" customModule="LocalTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="uyh-YI-xb0"/>
+                        <viewControllerLayoutGuide type="bottom" id="AnG-lv-rJ5"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Rru-1f-CPc">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="1Kp-BW-3B7" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1428" y="-318"/>
+        </scene>
+        <!--Chat View Controller-->
+        <scene sceneID="xrf-gT-kWG">
+            <objects>
+                <viewController id="OPY-B4-8ln" customClass="ChatViewController" customModule="LocalTalk" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="4Oz-uO-LA2"/>
+                        <viewControllerLayoutGuide type="bottom" id="JC1-Wz-Pl9"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="AHZ-QC-QyD">
+                        <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <navigationBar contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="XQo-5a-cGa">
+                                <rect key="frame" x="0.0" y="0.0" width="375" height="44"/>
+                                <items>
+                                    <navigationItem title="Chatting" id="Irr-Aj-9Sm"/>
+                                </items>
+                            </navigationBar>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="onh-2h-z9j">
+                                <rect key="frame" x="28" y="617" width="256" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rMe-sH-tyc">
+                                <rect key="frame" x="298" y="617" width="36" height="30"/>
+                                <state key="normal" title="Send">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Lev-fK-0WC">
+                                <rect key="frame" x="94" y="74" width="240" height="128"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="QoG-Rj-GJo" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1819.5" y="411.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="s7b-fM-8rL">

@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
+		3364D22E1BA84D410040E20B /* SessionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3364D22D1BA84D410040E20B /* SessionViewController.swift */; };
+		3364D2301BA84D600040E20B /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3364D22F1BA84D600040E20B /* MPCManager.swift */; };
+		3364D2321BA8546B0040E20B /* ChatViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3364D2311BA8546B0040E20B /* ChatViewController.swift */; };
 		33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDB1BA0656500E043AE /* AppDelegate.swift */; };
 		33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDD1BA0656500E043AE /* ViewController.swift */; };
 		33D2CBE11BA0656500E043AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBDF1BA0656500E043AE /* Main.storyboard */; };
@@ -28,6 +31,9 @@
 
 /* Begin PBXFileReference section */
 		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
+		3364D22D1BA84D410040E20B /* SessionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SessionViewController.swift; sourceTree = "<group>"; };
+		3364D22F1BA84D600040E20B /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MPCManager.swift; sourceTree = "<group>"; };
+		3364D2311BA8546B0040E20B /* ChatViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ChatViewController.swift; sourceTree = "<group>"; };
 		33D2CBD61BA0656500E043AE /* LocalTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D2CBDA1BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBDB1BA0656500E043AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +64,22 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		3364D2331BA854DB0040E20B /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				3364D22F1BA84D600040E20B /* MPCManager.swift */,
+				33113C071BA30B8000A88277 /* ConversationData.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
+		3364D2351BA854F30040E20B /* Views */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Views;
+			sourceTree = "<group>";
+		};
 		33D2CBCD1BA0656500E043AE = {
 			isa = PBXGroup;
 			children = (
@@ -79,10 +101,11 @@
 		33D2CBD81BA0656500E043AE /* LocalTalk */ = {
 			isa = PBXGroup;
 			children = (
+				3364D2331BA854DB0040E20B /* Models */,
 				33D2CBFB1BA0680E00E043AE /* Controllers */,
+				3364D2351BA854F30040E20B /* Views */,
 				33D2CBDB1BA0656500E043AE /* AppDelegate.swift */,
 				33D2CBDF1BA0656500E043AE /* Main.storyboard */,
-				33113C071BA30B8000A88277 /* ConversationData.swift */,
 				33D2CBE21BA0656500E043AE /* Images.xcassets */,
 				33D2CBE41BA0656500E043AE /* LaunchScreen.xib */,
 				33D2CBD91BA0656500E043AE /* Supporting Files */,
@@ -118,6 +141,8 @@
 		33D2CBFB1BA0680E00E043AE /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				3364D22D1BA84D410040E20B /* SessionViewController.swift */,
+				3364D2311BA8546B0040E20B /* ChatViewController.swift */,
 				33D2CBDD1BA0656500E043AE /* ViewController.swift */,
 			);
 			name = Controllers;
@@ -224,7 +249,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */,
+				3364D22E1BA84D410040E20B /* SessionViewController.swift in Sources */,
+				3364D2301BA84D600040E20B /* MPCManager.swift in Sources */,
 				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
+				3364D2321BA8546B0040E20B /* ChatViewController.swift in Sources */,
 				33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
