@@ -8,6 +8,10 @@
 
 /* Begin PBXBuildFile section */
 		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
+		33182A671BAAF4B800E29BE9 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A661BAAF4B800E29BE9 /* MPCManager.swift */; };
+		33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
+		33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
+		33182A6D1BAAF98B00E29BE9 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* DataSource.swift */; };
 		33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDB1BA0656500E043AE /* AppDelegate.swift */; };
 		33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDD1BA0656500E043AE /* ViewController.swift */; };
 		33D2CBE11BA0656500E043AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBDF1BA0656500E043AE /* Main.storyboard */; };
@@ -28,6 +32,9 @@
 
 /* Begin PBXFileReference section */
 		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
+		33182A661BAAF4B800E29BE9 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MPCManager.swift; path = Models/MPCManager.swift; sourceTree = "<group>"; };
+		33182A691BAAF58D00E29BE9 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
+		33182A6C1BAAF98B00E29BE9 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		33D2CBD61BA0656500E043AE /* LocalTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D2CBDA1BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBDB1BA0656500E043AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -58,6 +65,17 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
+		33182A681BAAF4C200E29BE9 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				33113C071BA30B8000A88277 /* ConversationData.swift */,
+				33182A6C1BAAF98B00E29BE9 /* DataSource.swift */,
+				33182A661BAAF4B800E29BE9 /* MPCManager.swift */,
+				33182A691BAAF58D00E29BE9 /* Contact.swift */,
+			);
+			name = Models;
+			sourceTree = "<group>";
+		};
 		33D2CBCD1BA0656500E043AE = {
 			isa = PBXGroup;
 			children = (
@@ -82,7 +100,7 @@
 				33D2CBFB1BA0680E00E043AE /* Controllers */,
 				33D2CBDB1BA0656500E043AE /* AppDelegate.swift */,
 				33D2CBDF1BA0656500E043AE /* Main.storyboard */,
-				33113C071BA30B8000A88277 /* ConversationData.swift */,
+				33182A681BAAF4C200E29BE9 /* Models */,
 				33D2CBE21BA0656500E043AE /* Images.xcassets */,
 				33D2CBE41BA0656500E043AE /* LaunchScreen.xib */,
 				33D2CBD91BA0656500E043AE /* Supporting Files */,
@@ -223,8 +241,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33182A6D1BAAF98B00E29BE9 /* DataSource.swift in Sources */,
 				33D2CBDE1BA0656500E043AE /* ViewController.swift in Sources */,
 				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
+				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,
+				33182A671BAAF4B800E29BE9 /* MPCManager.swift in Sources */,
 				33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -233,6 +254,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */,
 				33D2CBF21BA0656500E043AE /* LocalTalkTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
