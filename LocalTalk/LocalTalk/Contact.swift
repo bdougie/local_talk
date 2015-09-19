@@ -9,12 +9,16 @@
 import UIKit
 
 class Contact: NSObject {
-    var name: String
-    var image: UIImage?
+    var name: String = ""
+    var image: String?
     
-    init(name: String, image: UIImage?) {
-        self.name = name
-        self.image = image
-    }
+//  Why do I not need an init()?
+// Commenting out this worked 
+    
+    //    init(name: String, image: String?) {
+//        self.name = name
+//        self.image = image
+//        super.init()
+//    }
    
 }

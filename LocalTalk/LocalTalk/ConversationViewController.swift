@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  ConversationViewController.swift
 //  LocalTalk
 //
 //  Created by Brian Douglas on 9/9/15.
@@ -8,9 +8,9 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ConversationViewController: UIViewController {
     @IBOutlet weak var Conversations : ConversationData?
-    @IBOutlet weak var addConversation: UIBarButtonItem!
+//    @IBOutlet weak var addConversation: UIBarButtonItem!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,7 +21,6 @@ class ViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
 
 }
 
