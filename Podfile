@@ -1,0 +1,1 @@
+pod 'PonyDebugger', :git => 'https://github.com/square/PonyDebugger.git'
