@@ -21,9 +21,9 @@ class ConversationData: NSObject, UICollectionViewDataSource {
         let image = UIImage(named: imageName)
         let imageView = UIImageView(image: image!)
        
-        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        label.center = CGPointMake(160, 284)
+        let label = UILabel(frame: CGRectMake(0, 0, cell.frame.width, CGFloat.max))
         label.textAlignment = NSTextAlignment.Center
+        label.sizeToFit()
         label.text = "I'am a test label"
         
         cell.cellImageView = imageView
@@ -33,7 +33,7 @@ class ConversationData: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        println("Got \(DataSource.sharedInstance.activePeers.count) items");
+        println("Got \(DataSource.sharedInstance.activePeers.count) items")
         return DataSource.sharedInstance.activePeers.count
     }
     

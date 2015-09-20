@@ -49,6 +49,7 @@
 		33182A731BAC402200E29BE9 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
 		33182A741BAC402200E29BE9 /* 6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 6.jpg; sourceTree = "<group>"; };
 		33182A7C1BAD612600E29BE9 /* ConversationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationCollectionViewCell.swift; sourceTree = "<group>"; };
+		33182A7E1BAEBB0500E29BE9 /* LocalTalk-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "LocalTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		33D2CBD61BA0656500E043AE /* LocalTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D2CBDA1BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBDB1BA0656500E043AE /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -132,6 +133,7 @@
 		33D2CBD81BA0656500E043AE /* LocalTalk */ = {
 			isa = PBXGroup;
 			children = (
+				33182A7E1BAEBB0500E29BE9 /* LocalTalk-Bridging-Header.h */,
 				33D2CBDB1BA0656500E043AE /* AppDelegate.swift */,
 				33D2CBDF1BA0656500E043AE /* Main.storyboard */,
 				33D2CBFB1BA0680E00E043AE /* Controllers */,
@@ -421,6 +423,7 @@
 				INFOPLIST_FILE = LocalTalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LocalTalk-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -431,6 +434,7 @@
 				INFOPLIST_FILE = LocalTalk/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "LocalTalk-Bridging-Header.h";
 			};
 			name = Release;
 		};
