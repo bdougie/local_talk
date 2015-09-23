@@ -10,24 +10,29 @@ import UIKit
 
 class ConversationData: NSObject, UICollectionViewDataSource {
     @IBOutlet var collectionview: UICollectionView!
- 
+    
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         var cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
-        let contact = DataSource.sharedInstance.activePeers[indexPath.row]
+        var contact = DataSource.sharedInstance.activePeers[indexPath.row]
         
-        // Cant use  "let imageName = contact.image" -- not sure why?
-        let imageName = "1.jpg"
-        let image = UIImage(named: imageName)
-        let imageView = UIImageView(image: image!)
-       
-        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
+        // Cant use  "var imageName = contact.image" -- not sure why?
+//        var imageName = contact.image
+//        println("SAMAMA \(toString(contact.description.dynamicType))")
+        var imageName = "3.jpg"
+        var image = UIImage(named: imageName)
+        var imageView = UIImageView(image: image!)
+        imageView.frame = CGRect(x: 15, y: 0, width: 60, height: 60)
+        
+        var label = UILabel(frame: CGRectMake(0, 0, 200, 210))
         label.center = CGPointMake(160, 284)
         label.textAlignment = NSTextAlignment.Center
-        label.text = "I'am a test label"
+        label.text = "I'am a test message"
         
         cell.cellImageView = imageView
         cell.cellMessagePreview = label
+        cell.addSubview(imageView)
+        cell.addSubview(label)
         
         return cell
     }
