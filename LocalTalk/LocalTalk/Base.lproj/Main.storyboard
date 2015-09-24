@@ -34,8 +34,15 @@
                                             <rect key="frame" x="0.0" y="0.0" width="375" height="60"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleAspectFill" verticalHuggingPriority="251" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="oGn-hZ-TjK">
+                                                    <rect key="frame" x="15" y="0.0" width="80" height="60"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="80" id="3gd-L3-pBR"/>
+                                                        <constraint firstAttribute="height" constant="60" id="gWt-lE-mtY"/>
+                                                    </constraints>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Message Preview" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8GK-6s-RgS">
-                                                    <rect key="frame" x="79" y="14" width="134.5" height="20.5"/>
+                                                    <rect key="frame" x="105" y="30" width="135" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="270" id="Wad-Qv-Mb5"/>
                                                     </constraints>
@@ -48,13 +55,12 @@
                                                         </mask>
                                                     </variation>
                                                 </label>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="oGn-hZ-TjK">
-                                                    <rect key="frame" x="0.0" y="0.0" width="60" height="60"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="60" id="3gd-L3-pBR"/>
-                                                        <constraint firstAttribute="height" constant="60" id="gWt-lE-mtY"/>
-                                                    </constraints>
-                                                </imageView>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3m0-Sc-u4Q">
+                                                    <rect key="frame" x="105" y="8" width="35" height="17"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="14"/>
+                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <nil key="highlightedColor"/>
+                                                </label>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
@@ -62,23 +68,37 @@
                                         <constraints>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="topMargin" constant="6" id="0RI-t6-4sG"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="width" secondItem="oGn-hZ-TjK" secondAttribute="width" id="4L6-As-4OS"/>
+                                            <constraint firstItem="8GK-6s-RgS" firstAttribute="top" secondItem="3m0-Sc-u4Q" secondAttribute="bottom" constant="5" id="4sw-Ky-rqw"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="3m0-Sc-u4Q" secondAttribute="trailing" priority="500" constant="227" id="7IL-eP-UvE"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="centerY" secondItem="oGn-hZ-TjK" secondAttribute="centerY" id="Fvk-kz-bCH"/>
                                             <constraint firstItem="oGn-hZ-TjK" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="top" id="GrQ-fd-d0A"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="topMargin" constant="6" id="TRG-sI-l15"/>
+                                            <constraint firstItem="oGn-hZ-TjK" firstAttribute="leading" secondItem="Nvc-hV-AKC" secondAttribute="leadingMargin" constant="-8" id="Utv-I2-rrM"/>
+                                            <constraint firstItem="3m0-Sc-u4Q" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="topMargin" id="aaV-ol-XuK"/>
                                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="8GK-6s-RgS" secondAttribute="trailing" constant="410" id="b6V-qV-pIi"/>
+                                            <constraint firstItem="8GK-6s-RgS" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="25" id="dzM-OR-CbC"/>
+                                            <constraint firstItem="oGn-hZ-TjK" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="top" id="hkA-3u-6kO"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="19" id="nYK-IU-TFg"/>
                                             <constraint firstItem="oGn-hZ-TjK" firstAttribute="leading" secondItem="Nvc-hV-AKC" secondAttribute="leading" id="ptp-aZ-Tm1"/>
-                                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="8GK-6s-RgS" secondAttribute="trailing" constant="246" id="wC3-DL-KjZ"/>
+                                            <constraint firstItem="3m0-Sc-u4Q" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="25" id="suJ-PY-0nO"/>
+                                            <constraint firstItem="oGn-hZ-TjK" firstAttribute="leading" secondItem="Nvc-hV-AKC" secondAttribute="leading" id="tET-yq-soQ"/>
+                                            <constraint firstAttribute="trailingMargin" relation="lessThanOrEqual" secondItem="8GK-6s-RgS" secondAttribute="trailing" priority="500" constant="246" id="wC3-DL-KjZ"/>
                                         </constraints>
                                         <variation key="default">
                                             <mask key="constraints">
+                                                <exclude reference="GrQ-fd-d0A"/>
+                                                <exclude reference="ptp-aZ-Tm1"/>
+                                                <exclude reference="tET-yq-soQ"/>
+                                                <exclude reference="0RI-t6-4sG"/>
                                                 <exclude reference="4L6-As-4OS"/>
                                                 <exclude reference="Fvk-kz-bCH"/>
                                                 <exclude reference="TRG-sI-l15"/>
                                                 <exclude reference="b6V-qV-pIi"/>
+                                                <exclude reference="nYK-IU-TFg"/>
                                             </mask>
                                         </variation>
                                         <connections>
+                                            <outlet property="cellContactName" destination="3m0-Sc-u4Q" id="yhd-4h-Ix3"/>
                                             <outlet property="cellImageView" destination="oGn-hZ-TjK" id="B7y-RT-0dE"/>
                                             <outlet property="cellMessagePreview" destination="8GK-6s-RgS" id="reL-su-DGv"/>
                                         </connections>

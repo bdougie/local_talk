@@ -11,4 +11,5 @@ import UIKit
 class ConversationCollectionViewCell: UICollectionViewCell {
     @IBOutlet var cellImageView: UIImageView!
     @IBOutlet var cellMessagePreview: UILabel?
+    @IBOutlet var cellContactName: UILabel?
 }

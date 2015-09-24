@@ -17,9 +17,11 @@ class ConversationData: NSObject, UICollectionViewDataSource {
         var contact : Contact = DataSource.sharedInstance.activePeers[indexPath.row] as! Contact
         
         var imageName = contact.image
+        var contactName = contact.name
         var image = UIImage(named: imageName!)
         
         cell.cellImageView.image = image
+        cell.cellContactName!.text = contactName
         cell.cellMessagePreview!.text = "I'am a test message"
         
         return cell
