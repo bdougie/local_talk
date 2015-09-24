@@ -11,6 +11,7 @@ import UIKit
 class DataSource: NSObject {
     
     var activePeers: Array<NSObject> = []
+    var randomMessages: [String] = []
     
     class var sharedInstance :DataSource {
         struct Singleton {
@@ -27,23 +28,19 @@ class DataSource: NSObject {
     }
     
     func addRandomData() {
-        var contact1: Contact = Contact.new()
-        contact1.name = "Louis Picasso"
-        contact1.image = "1.jpg"
-        
-        var contact2: Contact = Contact.new()
-        contact2.name = "Sir Mercy Lago"
-        contact2.image = "2.jpg"
-        
-        var contact3: Contact = Contact.new()
-        contact3.name = "Amadeus Da Vinci"
-        contact3.image = "3.jpg"
-        
-        var contact4: Contact = Contact.new()
-        contact4.name = "Jean Paul Hampton"
-        contact4.image = "4.jpg"
+        let contact1 = Contact(name: "Louis Picasso", image: "1.jpg")
+        let contact2 = Contact(name: "Sir Mercy Lago", image: "2.jpg")
+        let contact3 = Contact(name: "Amadeus Da Vinci", image: "3.jpg")
+        let contact4 = Contact(name: "Jean Paul Hampton", image: "4.jpg")
         
         self.activePeers = NSArray(objects: contact1, contact2, contact3, contact4) as! Array<NSObject>
+        
+        let message1 = "When you’re the absolute best, you get hated on the most."
+        let message2 = "My goal, if I was going to do art, fine art, would have been to become Picasso or greater… That always sounds so funny to people, comparing yourself to someone who has done so much, and that’s a mentality that suppresses humanity…"
+        let message3 = "One of my biggest achilles heels has been my ego. And if I, Kanye West, can remove my ego, I think there’s hope for everyone."
+        let message4 = "I refuse to accept other people's ideas of happiness for me. As if there's a 'one size fits all' standard for happiness."
+        
+        self.randomMessages = NSArray(objects: message1, message2, message3, message4) as! [String]
     }
 }
 

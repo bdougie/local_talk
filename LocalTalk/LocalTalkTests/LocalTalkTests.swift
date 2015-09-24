@@ -21,10 +21,9 @@ class LocalTalkTests: XCTestCase {
         super.tearDown()
     }
     
-// I had to remove the initializers
-//    func testContactInitialization() {
-//        let potentialContact = Contact(name: "Newest Meal", image:nil)
-//        XCTAssertNotNil(potentialContact, "Contact can't be nil" )
-//    }
+    func testContactInitialization() {
+        let potentialContact = Contact(name: "Newest Meal", image:nil)
+        XCTAssertNotNil(potentialContact, "Contact can't be nil" )
+    }
     
 }
