@@ -22,7 +22,7 @@ class ConversationData: NSObject, UICollectionViewDataSource {
         
         cell.cellImageView.image = image
         cell.cellContactName!.text = contactName
-        cell.cellMessagePreview!.text = "I'am a test message"
+        cell.cellMessagePreview!.text = "I refuse to accept other people's ideas of happiness for me. As if there's a 'one size fits all' standard for happiness."
         
         return cell
     }
