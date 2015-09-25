@@ -1,0 +1,22 @@
+PODS:
+  - PonyDebugger (0.4.5):
+    - SocketRocket
+  - SocketRocket (0.4.1)
+
+DEPENDENCIES:
+  - PonyDebugger (from `https://github.com/square/PonyDebugger.git`)
+
+EXTERNAL SOURCES:
+  PonyDebugger:
+    :git: https://github.com/square/PonyDebugger.git
+
+CHECKOUT OPTIONS:
+  PonyDebugger:
+    :commit: 8a9149857af4bb40237ae5c589c1001de69d02f4
+    :git: https://github.com/square/PonyDebugger.git
+
+SPEC CHECKSUMS:
+  PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7
+  SocketRocket: ee0b5c34182d37bb4f1f8d628bbe737718126daa
+
+COCOAPODS: 0.38.2

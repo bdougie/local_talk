@@ -1,0 +1,13 @@
+# Uncomment this line to define a global platform for your project
+# platform :ios, '6.0'
+
+target 'LocalTalk' do
+
+  pod 'PonyDebugger', :git => 'https://github.com/square/PonyDebugger.git'
+
+end
+
+target 'LocalTalkTests' do
+
+end
+
