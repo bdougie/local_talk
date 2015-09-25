@@ -120,7 +120,11 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Oracle De La Kanye" id="3u5-2h-IF7">
-                        <barButtonItem key="rightBarButtonItem" image="Plus Math-50" id="rTT-tS-fqt"/>
+                        <barButtonItem key="rightBarButtonItem" image="Plus Math-50" id="rTT-tS-fqt">
+                            <connections>
+                                <action selector="addConversation:" destination="vXZ-lx-hvc" id="m2W-Sh-WIm"/>
+                            </connections>
+                        </barButtonItem>
                     </navigationItem>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
