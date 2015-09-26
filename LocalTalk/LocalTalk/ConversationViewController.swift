@@ -8,6 +8,8 @@
 
 import UIKit
 import MultipeerConnectivity
+// http://radar.oreilly.com/2014/09/multipeer-connectivity-on-ios-8-with-swift.html
+// https://www.hackingwithswift.com/read/25/4/invitation-only-mcpeerid
 
 class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate {
     let serviceType = "LCOC-Chat"
@@ -21,11 +23,16 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
    
     override func viewDidLoad() {
         super.viewDidLoad()
-        // create the browser viewcontroller with a unique service name
+        
+        self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
+        self.session = MCSession(peer: peerID)
+        self.session.delegate = self
+        
         self.browser = MCBrowserViewController(serviceType:serviceType,
             session:self.session)
         
         self.browser.delegate = self;
+        startHosting(nil);
     }
 
     @IBAction func addConversation(sender: UIBarButtonItem) {
@@ -54,7 +61,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func session(session: MCSession, didReceiveData data: NSData,
         fromPeer peerID: MCPeerID)  {
-            // Called when a peer sends an NSData to us
+            // BoilerPlate: Called when a peer sends an NSData to us
             
             // This needs to run on the main queue
 //            dispatch_async(dispatch_get_main_queue()) {
@@ -90,6 +97,19 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         didChangeState state: MCSessionState)  {
             // Called when a connected peer changes state (for example, goes offline)
             
+    }
+    
+     // MARK: MCAdvertiserAssistant method implementation
+    
+    func startHosting(action: UIAlertAction!) {
+        assistant = MCAdvertiserAssistant(serviceType: serviceType, discoveryInfo: nil, session: session)
+        assistant.start()
+    }
+    
+    func joinSession(action: UIAlertAction!) {
+        let mcBrowser = MCBrowserViewController(serviceType: serviceType, session: session)
+        mcBrowser.delegate = self
+        presentViewController(mcBrowser, animated: true, completion: nil)
     }
 
 
