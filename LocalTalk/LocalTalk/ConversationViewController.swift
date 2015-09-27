@@ -31,6 +31,9 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         self.browser = MCBrowserViewController(serviceType:serviceType,
             session:self.session)
         
+        // move to a seperate initWithStyleFunc
+        // addToolbarToBroswer()
+        
         self.browser.delegate = self;
         startHosting(nil);
     }
@@ -44,8 +47,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func browserViewControllerDidFinish(
         browserViewController: MCBrowserViewController)  {
-            // Called when the browser view controller is dismissed (ie the Done
-            // button was tapped)
+            // the Done button was tapped)
             
             self.dismissViewControllerAnimated(true, completion: nil)
     }
@@ -53,23 +55,23 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     func browserViewControllerWasCancelled(
         browserViewController: MCBrowserViewController)  {
             // Called when the browser view controller is cancelled
-            
             self.dismissViewControllerAnimated(true, completion: nil)
     }
+    
+//    func addToolbarToBroswer() {
+//        // attempt to add "Select Recipient to toolbar
+//        browser.topView = UIToolbar.new()
+//        browser.topView.barTintColor = whiteBG
+//        browser.topView.text = "Select Recipient"
+//        browser.topView.alpha = 0.5
+//        browser.addSubview(self.topView)
+//    }
     
     // MARK: MCBrowserSessionDelegate method implementation
     
     func session(session: MCSession, didReceiveData data: NSData,
         fromPeer peerID: MCPeerID)  {
-            // BoilerPlate: Called when a peer sends an NSData to us
-            
-            // This needs to run on the main queue
-//            dispatch_async(dispatch_get_main_queue()) {
-//                
-//                var msg = NSString(data: data, encoding: NSUTF8StringEncoding)
-//                
-//                self.updateChat(msg, fromPeer: peerID)
-//            }
+            // BoilerPlate: Called when a peer sends an NSData
     }
     
     // The following methods do nothing, but the MCSessionDelegate protocol
@@ -95,8 +97,37 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func session(session: MCSession, peer peerID: MCPeerID,
         didChangeState state: MCSessionState)  {
-            // Called when a connected peer changes state (for example, goes offline)
+        // Called when a connected peer changes state (for example, goes offline)
+        let peersCount = self.session.connectedPeers.count
+
+        switch state {
+        case MCSessionState.Connected:
+            print("Connected: \(peerID.displayName)")
+            let onlineNotification = UILocalNotification()
+            onlineNotification.alertBody = "\(peerID.displayName) is online"
+            UIApplication.sharedApplication().scheduleLocalNotification(onlineNotification)
             
+//            NSNotificationCenter.defaultCenter().addObserver(
+//                self,
+//                selector: "reloadUserTable",
+//                name: "\(peerID.displayName) online",
+//                object: onlineNotification
+//            )
+        case MCSessionState.NotConnected:
+            print("Disconnected: \(peerID.displayName)")
+            let offlineNotification = UILocalNotification()
+            offlineNotification.alertBody = "\(peerID.displayName) is online"
+            UIApplication.sharedApplication().scheduleLocalNotification(offlineNotification)
+            
+//            NSNotificationCenter.defaultCenter().addObserver(
+//                self,
+//                selector: "reloadUserTable",
+//                name: "\(peerID.displayName) went offline",
+//                object: offlineNotification
+//            )
+        default:
+            print("No Peers Connected: \(peersCount)")
+        }
     }
     
      // MARK: MCAdvertiserAssistant method implementation
