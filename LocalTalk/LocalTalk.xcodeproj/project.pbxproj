@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
-		33182A671BAAF4B800E29BE9 /* MPCManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A661BAAF4B800E29BE9 /* MPCManager.swift */; };
 		33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6D1BAAF98B00E29BE9 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* DataSource.swift */; };
@@ -41,7 +40,6 @@
 /* Begin PBXFileReference section */
 		2EF6A9D6BD01E83C7EF4B029 /* Pods-LocalTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
-		33182A661BAAF4B800E29BE9 /* MPCManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MPCManager.swift; path = Models/MPCManager.swift; sourceTree = "<group>"; };
 		33182A691BAAF58D00E29BE9 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		33182A6C1BAAF98B00E29BE9 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		33182A6F1BAC402200E29BE9 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -97,7 +95,6 @@
 			children = (
 				33113C071BA30B8000A88277 /* ConversationData.swift */,
 				33182A6C1BAAF98B00E29BE9 /* DataSource.swift */,
-				33182A661BAAF4B800E29BE9 /* MPCManager.swift */,
 				33182A691BAAF58D00E29BE9 /* Contact.swift */,
 			);
 			name = Models;
@@ -350,7 +347,6 @@
 				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
 				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,
 				33182A7D1BAD612600E29BE9 /* ConversationCollectionViewCell.swift in Sources */,
-				33182A671BAAF4B800E29BE9 /* MPCManager.swift in Sources */,
 				33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
