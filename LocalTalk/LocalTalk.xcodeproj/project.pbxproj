@@ -10,7 +10,7 @@
 		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
 		33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
-		33182A6D1BAAF98B00E29BE9 /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* DataSource.swift */; };
+		33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* Message.swift */; };
 		33182A751BAC402200E29BE9 /* 1.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A6F1BAC402200E29BE9 /* 1.jpg */; };
 		33182A761BAC402200E29BE9 /* 2.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A701BAC402200E29BE9 /* 2.jpg */; };
 		33182A771BAC402200E29BE9 /* 3.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A711BAC402200E29BE9 /* 3.jpg */; };
@@ -41,7 +41,7 @@
 		2EF6A9D6BD01E83C7EF4B029 /* Pods-LocalTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.debug.xcconfig"; sourceTree = "<group>"; };
 		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
 		33182A691BAAF58D00E29BE9 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
-		33182A6C1BAAF98B00E29BE9 /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
+		33182A6C1BAAF98B00E29BE9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		33182A6F1BAC402200E29BE9 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
 		33182A701BAC402200E29BE9 /* 2.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 2.jpg; sourceTree = "<group>"; };
 		33182A711BAC402200E29BE9 /* 3.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 3.jpg; sourceTree = "<group>"; };
@@ -94,7 +94,7 @@
 			isa = PBXGroup;
 			children = (
 				33113C071BA30B8000A88277 /* ConversationData.swift */,
-				33182A6C1BAAF98B00E29BE9 /* DataSource.swift */,
+				33182A6C1BAAF98B00E29BE9 /* Message.swift */,
 				33182A691BAAF58D00E29BE9 /* Contact.swift */,
 			);
 			name = Models;
@@ -342,7 +342,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				33182A6D1BAAF98B00E29BE9 /* DataSource.swift in Sources */,
+				33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */,
 				33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */,
 				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
 				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,

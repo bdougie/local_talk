@@ -14,8 +14,8 @@ class ConversationData: NSObject, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
-        let contact : Contact = DataSource.sharedInstance.activePeers[indexPath.row] as! Contact
-        let message = DataSource.sharedInstance.randomMessages[indexPath.row]
+        let contact : Contact = Message.sharedInstance.activePeers[indexPath.row] as! Contact
+        let message = Message.sharedInstance.randomMessages[indexPath.row]
         
         let imageName = contact.image
         let contactName = contact.name
@@ -29,8 +29,8 @@ class ConversationData: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Got \(DataSource.sharedInstance.activePeers.count) items");
-        return DataSource.sharedInstance.activePeers.count
+        print("Got \(Message.sharedInstance.activePeers.count) items");
+        return Message.sharedInstance.activePeers.count
     }
     
 }

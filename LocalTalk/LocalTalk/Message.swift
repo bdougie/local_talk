@@ -1,5 +1,5 @@
 //
-//  DataSource.swift
+//  Message.swift
 //  LocalTalk
 //
 //  Created by Brian Douglas on 9/17/15.
@@ -8,14 +8,14 @@
 
 import UIKit
 
-class DataSource: NSObject {
+class Message: NSObject {
     
     var activePeers: Array<NSObject> = []
     var randomMessages: [String] = []
     
-    class var sharedInstance :DataSource {
+    class var sharedInstance :Message {
         struct Singleton {
-            static let instance = DataSource()
+            static let instance = Message()
         }
         
         return Singleton.instance
