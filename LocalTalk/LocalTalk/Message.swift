@@ -8,7 +8,7 @@
 
 import UIKit
 
-class Message: NSObject {
+class Message: NSObject, JSQMessageData {
     
     var activePeers: Array<NSObject> = []
     var randomMessages: [String] = []
