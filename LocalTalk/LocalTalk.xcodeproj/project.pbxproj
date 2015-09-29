@@ -59,6 +59,7 @@
 		33D2CBEB1BA0656500E043AE /* LocalTalkTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = LocalTalkTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		33D2CBF01BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBF11BA0656500E043AE /* LocalTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTalkTests.swift; sourceTree = "<group>"; };
+		37E0F0591BBAFD6D00EB33E9 /* LocalTalk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocalTalk-Bridging-Header.h"; sourceTree = "<group>"; };
 		CC2494489FD1F76DD92D1B02 /* libPods-LocalTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LocalTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7DC3B05EE7B418BD83192B /* Pods-LocalTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -151,6 +152,7 @@
 				33182A7B1BAD60FE00E29BE9 /* Views */,
 				33D2CBE21BA0656500E043AE /* Images.xcassets */,
 				33D2CBE41BA0656500E043AE /* LaunchScreen.xib */,
+				37E0F0591BBAFD6D00EB33E9 /* LocalTalk-Bridging-Header.h */,
 				33182A6E1BAC3EE100E29BE9 /* Images */,
 				33D2CBD91BA0656500E043AE /* Supporting Files */,
 			);
@@ -481,6 +483,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.brianllamar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalTalk-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -493,6 +496,7 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = "com.brianllamar.$(PRODUCT_NAME:rfc1034identifier)";
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/LocalTalk-Bridging-Header.h";
 			};
 			name = Release;
 		};
