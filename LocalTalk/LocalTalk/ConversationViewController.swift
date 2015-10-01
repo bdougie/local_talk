@@ -98,36 +98,29 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     func session(session: MCSession, peer peerID: MCPeerID,
         didChangeState state: MCSessionState)  {
         // Called when a connected peer changes state (for example, goes offline)
-        let peersCount = self.session.connectedPeers.count
-
+        alertNotification(state, peer: peerID)
+    }
+    
+    func alertNotification(state: MCSessionState, peer: MCPeerID) {
         switch state {
         case MCSessionState.Connected:
-            print("Connected: \(peerID.displayName)")
-            let onlineNotification = UILocalNotification()
-            onlineNotification.alertBody = "\(peerID.displayName) is online"
-            UIApplication.sharedApplication().scheduleLocalNotification(onlineNotification)
+            let title = "\(peer.displayName) is online"
+            let message = "\(peer.displayName) is ready to chat"
             
-//            NSNotificationCenter.defaultCenter().addObserver(
-//                self,
-//                selector: "reloadUserTable",
-//                name: "\(peerID.displayName) online",
-//                object: onlineNotification
-//            )
+            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: { () -> Void in});
         case MCSessionState.NotConnected:
-            print("Disconnected: \(peerID.displayName)")
-            let offlineNotification = UILocalNotification()
-            offlineNotification.alertBody = "\(peerID.displayName) is online"
-            UIApplication.sharedApplication().scheduleLocalNotification(offlineNotification)
+            let title = "\(peer.displayName) went offline"
+            let message = "\(peer.displayName) left the chat"
             
-//            NSNotificationCenter.defaultCenter().addObserver(
-//                self,
-//                selector: "reloadUserTable",
-//                name: "\(peerID.displayName) went offline",
-//                object: offlineNotification
-//            )
+            let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+            alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil))
+            self.presentViewController(alert, animated: true, completion: { () -> Void in});
         default:
-            print("No Peers Connected: \(peersCount)")
+            print("No Peers Connected")
         }
+
     }
     
      // MARK: MCAdvertiserAssistant method implementation
