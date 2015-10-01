@@ -5,6 +5,7 @@ target 'LocalTalk' do
 
   pod 'PonyDebugger', :git => 'https://github.com/square/PonyDebugger.git'
   pod 'JSQMessagesViewController'
+  pod 'Firebase', '>= 2.4.0'
 
 end
 

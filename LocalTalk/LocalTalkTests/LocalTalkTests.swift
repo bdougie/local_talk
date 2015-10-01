@@ -22,7 +22,7 @@ class LocalTalkTests: XCTestCase {
     }
     
     func testContactInitialization() {
-        let potentialContact = Contact(name: "Newest Meal", image:nil)
+        let potentialContact = Contact(id: "1", name: "Newest Meal", image:nil)
         XCTAssertNotNil(potentialContact, "Contact can't be nil" )
     }
     
