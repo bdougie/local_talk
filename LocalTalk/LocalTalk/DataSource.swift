@@ -39,10 +39,10 @@ class DataSource: NSObject {
             let text3 = "One of my biggest achilles heels has been my ego. And if I, Kanye West, can remove my ego, I think there’s hope for everyone."
             let text4 = "I refuse to accept other people's ideas of happiness for me. As if there's a 'one size fits all' standard for happiness."
             
-            let message1 = Message(senderId: contact1.id, senderDisplayName: contact1.name, isMediaMessage: false, messageHash: 1, text: text1, imagePath: contact1.image)
-            let message2 = Message(senderId: contact2.id, senderDisplayName: contact2.name, isMediaMessage: false, messageHash: 2, text: text2, imagePath: contact2.image)
-            let message3 = Message(senderId: contact3.id, senderDisplayName: contact3.name, isMediaMessage: false, messageHash: 3, text: text3, imagePath: contact3.image)
-            let message4 = Message(senderId: contact4.id, senderDisplayName: contact4.name, isMediaMessage: false, messageHash: 4, text: text4, imagePath: contact4.image)
+            let message1 = Message(sender: contact1, isMediaMessage: false, messageHash: 1, text: text1, imagePath: contact1.image)
+            let message2 = Message(sender: contact2, isMediaMessage: false, messageHash: 2, text: text2, imagePath: contact2.image)
+            let message3 = Message(sender: contact3, isMediaMessage: false, messageHash: 3, text: text3, imagePath: contact3.image)
+            let message4 = Message(sender: contact4, isMediaMessage: false, messageHash: 4, text: text4, imagePath: contact4.image)
     
             self.randomMessages = NSArray(objects: message1, message2, message3, message4) as! [Message]
     }

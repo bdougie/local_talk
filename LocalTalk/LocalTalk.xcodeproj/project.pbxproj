@@ -19,14 +19,14 @@
 		33182A7A1BAC402200E29BE9 /* 6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A741BAC402200E29BE9 /* 6.jpg */; };
 		33182A7D1BAD612600E29BE9 /* ConversationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A7C1BAD612600E29BE9 /* ConversationCollectionViewCell.swift */; };
 		33BC88151BBC0C9000AF832B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC88141BBC0C9000AF832B /* DataSource.swift */; settings = {ASSET_TAGS = (); }; };
-		33BC88171BBC1ACE00AF832B /* MessagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC88161BBC1ACE00AF832B /* MessagesCollectionViewController.swift */; settings = {ASSET_TAGS = (); }; };
 		33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDB1BA0656500E043AE /* AppDelegate.swift */; };
 		33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDD1BA0656500E043AE /* ConversationViewController.swift */; };
 		33D2CBE11BA0656500E043AE /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBDF1BA0656500E043AE /* Main.storyboard */; };
 		33D2CBE31BA0656500E043AE /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBE21BA0656500E043AE /* Images.xcassets */; };
 		33D2CBE61BA0656500E043AE /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 33D2CBE41BA0656500E043AE /* LaunchScreen.xib */; };
 		33EA9A831BB441D2008D8076 /* LocalTalkTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBF11BA0656500E043AE /* LocalTalkTests.swift */; settings = {ASSET_TAGS = (); }; };
-		B320D9748FD8DA5626958DF5 /* libPods-LocalTalk.a in Frameworks */ = {isa = PBXBuildFile; fileRef = CC2494489FD1F76DD92D1B02 /* libPods-LocalTalk.a */; };
+		33EAEC891BBFED69004926D9 /* MessagesCollectionViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC88161BBC1ACE00AF832B /* MessagesCollectionViewController.swift */; settings = {ASSET_TAGS = (); }; };
+		F491953833031096418FAED1 /* Pods_LocalTalk.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 4B279A507413B3AEEDF659B1 /* Pods_LocalTalk.framework */; settings = {ATTRIBUTES = (Weak, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -64,7 +64,7 @@
 		33D2CBF01BA0656500E043AE /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		33D2CBF11BA0656500E043AE /* LocalTalkTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocalTalkTests.swift; sourceTree = "<group>"; };
 		37E0F0591BBAFD6D00EB33E9 /* LocalTalk-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "LocalTalk-Bridging-Header.h"; sourceTree = "<group>"; };
-		CC2494489FD1F76DD92D1B02 /* libPods-LocalTalk.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = "libPods-LocalTalk.a"; sourceTree = BUILT_PRODUCTS_DIR; };
+		4B279A507413B3AEEDF659B1 /* Pods_LocalTalk.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_LocalTalk.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		EC7DC3B05EE7B418BD83192B /* Pods-LocalTalk.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.release.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -73,7 +73,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				B320D9748FD8DA5626958DF5 /* libPods-LocalTalk.a in Frameworks */,
+				F491953833031096418FAED1 /* Pods_LocalTalk.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -90,7 +90,7 @@
 		2BA9BDFB2DB73F178EADB4BB /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				CC2494489FD1F76DD92D1B02 /* libPods-LocalTalk.a */,
+				4B279A507413B3AEEDF659B1 /* Pods_LocalTalk.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -219,6 +219,7 @@
 				33D2CBD31BA0656500E043AE /* Frameworks */,
 				33D2CBD41BA0656500E043AE /* Resources */,
 				ADA6E87FC8DF5A17D1C26C00 /* Copy Pods Resources */,
+				7F1F03A89044BC0345E3FDA7 /* Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -328,6 +329,21 @@
 			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
+		7F1F03A89044BC0345E3FDA7 /* Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		ADA6E87FC8DF5A17D1C26C00 /* Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -354,7 +370,7 @@
 				33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */,
 				33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */,
 				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
-				33BC88171BBC1ACE00AF832B /* MessagesCollectionViewController.swift in Sources */,
+				33EAEC891BBFED69004926D9 /* MessagesCollectionViewController.swift in Sources */,
 				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,
 				33182A7D1BAD612600E29BE9 /* ConversationCollectionViewCell.swift in Sources */,
 				33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */,

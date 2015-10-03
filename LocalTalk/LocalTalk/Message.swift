@@ -17,10 +17,10 @@ class Message: NSObject, JSQMessageData {
     var date_: NSDate
     var imagePath_: String
 
-    init(senderId: String, senderDisplayName: String, isMediaMessage: Bool, messageHash: UInt, text: String, imagePath: String?) {
+    init(sender: Contact, isMediaMessage: Bool, messageHash: UInt, text: String, imagePath: String?) {
         self.text_ = text
-        self.senderId_ = senderId
-        self.senderDisplayName_ = senderDisplayName
+        self.senderId_ = sender.id
+        self.senderDisplayName_ = sender.name
         self.date_ = NSDate()
         self.isMediaMessage_ = isMediaMessage
         self.messageHash_ = messageHash

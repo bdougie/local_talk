@@ -6,5 +6,5 @@
 //  Copyright (c) 2015 MutualFun. All rights reserved.
 //
 
-#import <JSQMessagesViewController/JSQMessage.h>
 #import <Firebase/Firebase.h>
+#import <JSQMessagesViewController/JSQMessage.h>
