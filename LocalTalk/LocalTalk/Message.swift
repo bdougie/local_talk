@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import JSQMessagesViewController
 
 class Message: NSObject, JSQMessageData {
     var text_: String

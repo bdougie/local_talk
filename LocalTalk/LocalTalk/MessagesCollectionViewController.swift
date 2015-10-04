@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import Firebase
+import JSQMessagesViewController
 
 private let reuseIdentifier = "Cell"
 
@@ -16,9 +18,9 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     
     var messages = [Message]()
     var avatars = Dictionary<String, UIImage>()
-    var outgoingBubbleImageView = JSQMessagesBubbleImageFactory.outgoingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleLightGrayColor())
-    var incomingBubbleImageView = JSQMessagesBubbleImageFactory.incomingMessageBubbleImageViewWithColor(UIColor.jsq_messageBubbleGreenColor())
-    var senderImageUrl: String!
+    var outgoingBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
+    var incomingBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+    var senderImagePath: String!
     var batchMessages = true
     var ref: Firebase!
     
@@ -33,10 +35,12 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         // *** STEP 4: RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
         messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
             let text = snapshot.value["text"] as? String
-            let sender = snapshot.value["sender"] as? String
-            let imageUrl = snapshot.value["imageUrl"] as? String
+            let sender = snapshot.value["sender"] as? Contact
+            let imagePath = snapshot.value["imagePath"] as? String
+            let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
+            let messageHash = snapshot.value["1"] as? UInt
             
-            let message = Message(text: text, sender: sender, imageUrl: imageUrl)
+            let message = Message(sender: sender!, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -47,23 +51,23 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         messagesRef.childByAutoId().setValue([
             "text":text,
             "sender":sender,
-            "imageUrl":senderImageUrl
+            "imagePath":senderImagePath
             ])
     }
     
     func tempSendMessage(text: String!, sender: Contact) {
-        let message = Message(senderId: sender.id, senderDisplayName: sender.name, isMediaMessage: true, messageHash: 1, text: text, imagePath: senderImageUrl)
+        let message = Message(sender: sender, isMediaMessage: true, messageHash: 1, text: text, imagePath: senderImagePath)
         messages.append(message)
     }
     
-    func setupAvatarImage(name: String, imageUrl: String?, incoming: Bool) {
-        if let stringUrl = imageUrl {
+    func setupAvatarImage(name: String, imagePath: String?, incoming: Bool) {
+        if let stringUrl = imagePath {
             if let url = NSURL(string: stringUrl) {
                 if let data = NSData(contentsOfURL: url) {
                     let image = UIImage(data: data)
-                    let diameter = incoming ? UInt(collectionView.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView.collectionViewLayout.outgoingAvatarViewSize.width)
-                    let avatarImage = JSQMessagesAvatarFactory.avatarWithImage(image, diameter: diameter)
-                    avatars[name] = avatarImage
+                    let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
+                    let avatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
+                    avatars[name] = avatarImage.avatarImage
                     return
                 }
             }
@@ -74,7 +78,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     func setupAvatarColor(name: String, incoming: Bool) {
-        let diameter = incoming ? UInt(collectionView.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView.collectionViewLayout.outgoingAvatarViewSize.width)
+        let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
         
         let rgbValue = name.hash
         let r = CGFloat(Float((rgbValue & 0xFF0000) >> 16)/255.0)
@@ -82,27 +86,29 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         let b = CGFloat(Float(rgbValue & 0xFF)/255.0)
         let color = UIColor(red: r, green: g, blue: b, alpha: 0.5)
         
-        let nameLength = count(name)
-        let initials : String? = name.substringToIndex(advance(sender.startIndex, min(3, nameLength)))
-        let userImage = JSQMessagesAvatarFactory.avatarWithUserInitials(initials, backgroundColor: color, textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(CGFloat(13)), diameter: diameter)
+        let separatedName = name.componentsSeparatedByString(" ")
+        let one = separatedName[0].characters.first
+        let two = separatedName[1].characters.first
+        let initials : String? = "\(one)\(two)"
+        let userImage = JSQMessagesAvatarImageFactory.avatarImageWithUserInitials(initials, backgroundColor: color, textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(CGFloat(13)), diameter: diameter)
         
-        avatars[name] = userImage
+        avatars[name] = userImage.avatarImage
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        inputToolbar.contentView.leftBarButtonItem = nil
+        inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
         navigationController?.navigationBar.topItem?.title = "Logout"
         
-        sender = (sender != nil) ? sender : "Anonymous"
+        senderDisplayName = (senderDisplayName != nil) ? senderDisplayName : "Anonymous"
         let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
         if let urlString = profileImageUrl {
-            setupAvatarImage(sender, imageUrl: urlString as String, incoming: false)
-            senderImageUrl = urlString as String
+            setupAvatarImage(senderDisplayName, imagePath: urlString as String, incoming: false)
+            senderImagePath = urlString as String
         } else {
-            setupAvatarColor(sender, incoming: false)
-            senderImageUrl = ""
+            setupAvatarColor(senderDisplayName, incoming: false)
+            senderImagePath = ""
         }
         
         setupFirebase()
@@ -110,7 +116,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        collectionView.collectionViewLayout.springinessEnabled = true
+        collectionView!.collectionViewLayout.springinessEnabled = true
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -129,7 +135,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         scrollToBottomAnimated(true)
     }
     
-    override func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
+    func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
         sendMessage(text, sender: sender)
@@ -138,30 +144,30 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     override func didPressAccessoryButton(sender: UIButton!) {
-        println("Camera pressed!")
+        print("Camera pressed!")
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, messageDataForItemAtIndexPath indexPath: NSIndexPath!) -> JSQMessageData! {
         return messages[indexPath.item]
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, bubbleImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
+    func collectionView(collectionView: JSQMessagesCollectionView!, bubbleImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
         let message = messages[indexPath.item]
         
-        if message.sender() == sender {
-            return UIImageView(image: outgoingBubbleImageView.image, highlightedImage: outgoingBubbleImageView.highlightedImage)
+        if message.senderDisplayName() == senderDisplayName {
+            return UIImageView(image: outgoingBubbleImage.messageBubbleImage, highlightedImage: outgoingBubbleImage.messageBubbleHighlightedImage)
         }
         
-        return UIImageView(image: incomingBubbleImageView.image, highlightedImage: incomingBubbleImageView.highlightedImage)
+        return UIImageView(image: incomingBubbleImage.messageBubbleImage, highlightedImage: incomingBubbleImage.messageBubbleHighlightedImage)
     }
     
-    override func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
+    func collectionView(collectionView: JSQMessagesCollectionView!, avatarImageViewForItemAtIndexPath indexPath: NSIndexPath!) -> UIImageView! {
         let message = messages[indexPath.item]
-        if let avatar = avatars[message.sender()] {
+        if let avatar = avatars[message.senderDisplayName()] {
             return UIImageView(image: avatar)
         } else {
-            setupAvatarImage(message.sender(), imageUrl: message.imageUrl(), incoming: true)
-            return UIImageView(image:avatars[message.sender()])
+            setupAvatarImage(message.senderDisplayName(), imagePath: message.imagePath(), incoming: true)
+            return UIImageView(image:avatars[message.senderDisplayName()])
         }
     }
     
@@ -173,17 +179,18 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         let cell = super.collectionView(collectionView, cellForItemAtIndexPath: indexPath) as! JSQMessagesCollectionViewCell
         
         let message = messages[indexPath.item]
-        if message.sender() == sender {
-            cell.textView.textColor = UIColor.blackColor()
+        if message.senderDisplayName() == senderDisplayName {
+            cell.textView!.textColor = UIColor.blackColor()
         } else {
-            cell.textView.textColor = UIColor.whiteColor()
+            cell.textView!.textColor = UIColor.whiteColor()
         }
         
-        let attributes : [NSObject:AnyObject] = [NSForegroundColorAttributeName:cell.textView.textColor, NSUnderlineStyleAttributeName: 1]
-        cell.textView.linkTextAttributes = attributes
+        //style for links.... not working look up in Swift
+//        let attributes : [NSObject:AnyObject] = [NSForegroundColorAttributeName:cell.textView!.textColor, NSUnderlineStyleAttributeName: 1]
+//        cell.textView!.linkTextAttributes = attributes
         
-        //        cell.textView.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView.textColor,
-        //            NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle]
+//                cell.textView.linkTextAttributes = [NSForegroundColorAttributeName: cell.textView.textColor,
+//                    NSUnderlineStyleAttributeName: NSUnderlineStyle.StyleSingle]
         return cell
     }
     
@@ -193,33 +200,33 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         let message = messages[indexPath.item];
         
         // Sent by me, skip
-        if message.sender() == sender {
+        if message.senderDisplayName() == senderDisplayName {
             return nil;
         }
         
         // Same as previous sender, skip
         if indexPath.item > 0 {
             let previousMessage = messages[indexPath.item - 1];
-            if previousMessage.sender() == message.sender() {
+            if previousMessage.senderDisplayName() == message.senderDisplayName() {
                 return nil;
             }
         }
         
-        return NSAttributedString(string:message.sender())
+        return NSAttributedString(string:message.senderDisplayName())
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {
         let message = messages[indexPath.item]
         
         // Sent by me, skip
-        if message.sender() == sender {
+        if message.senderDisplayName() == senderDisplayName {
             return CGFloat(0.0);
         }
         
         // Same as previous sender, skip
         if indexPath.item > 0 {
             let previousMessage = messages[indexPath.item - 1];
-            if previousMessage.sender() == message.sender() {
+            if previousMessage.senderDisplayName() == message.senderDisplayName() {
                 return CGFloat(0.0);
             }
         }

@@ -1,5 +1,5 @@
 PODS:
-  - Firebase (2.4.1)
+  - Firebase (2.4.1.1)
   - JSQMessagesViewController (7.2.0):
     - JSQSystemSoundPlayer (~> 2.0.1)
   - JSQSystemSoundPlayer (2.0.1)
@@ -22,7 +22,7 @@ CHECKOUT OPTIONS:
     :git: https://github.com/square/PonyDebugger.git
 
 SPEC CHECKSUMS:
-  Firebase: ee60a2abd9fc64f3ff30a6ea516d30a640eae46f
+  Firebase: 47f921f251c8982d147d90f2845816b21f016acc
   JSQMessagesViewController: 73cab48aa92fc2d512f3b6724f3425cc47a19eb5
   JSQSystemSoundPlayer: c5850e77a4363ffd374cd851154b9af93264ed8d
   PonyDebugger: 1c60f7c876bdb6a8b6bf0f0269087f8a234fafa7

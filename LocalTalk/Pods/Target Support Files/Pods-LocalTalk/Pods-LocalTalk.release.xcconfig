@@ -1,7 +1,7 @@
 ENABLE_NS_ASSERTIONS = YES
 GCC_PREPROCESSOR_DEFINITIONS = $(inherited) COCOAPODS=1
-HEADER_SEARCH_PATHS = $(inherited) "${PODS_ROOT}/Headers/Public" "${PODS_ROOT}/Headers/Public/Firebase" "${PODS_ROOT}/Headers/Public/JSQMessagesViewController" "${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer" "${PODS_ROOT}/Headers/Public/PonyDebugger" "${PODS_ROOT}/Headers/Public/SocketRocket"
-LIBRARY_SEARCH_PATHS = "$(PODS_ROOT)/Firebase"
-OTHER_CFLAGS = $(inherited) -isystem "${PODS_ROOT}/Headers/Public" -isystem "${PODS_ROOT}/Headers/Public/Firebase" -isystem "${PODS_ROOT}/Headers/Public/JSQMessagesViewController" -isystem "${PODS_ROOT}/Headers/Public/JSQSystemSoundPlayer" -isystem "${PODS_ROOT}/Headers/Public/PonyDebugger" -isystem "${PODS_ROOT}/Headers/Public/SocketRocket"
-OTHER_LDFLAGS = $(inherited) -ObjC -l"Firebase" -l"JSQMessagesViewController" -l"JSQSystemSoundPlayer" -l"PonyDebugger" -l"SocketRocket" -l"c++" -l"icucore" -framework "AudioToolbox" -framework "CFNetwork" -framework "CoreData" -framework "CoreGraphics" -framework "CoreLocation" -framework "Foundation" -framework "MapKit" -framework "QuartzCore" -framework "Security" -framework "SystemConfiguration" -framework "UIKit"
+LD_RUNPATH_SEARCH_PATHS = $(inherited) '@executable_path/Frameworks' '@loader_path/Frameworks'
+OTHER_CFLAGS = $(inherited) -iquote "$CONFIGURATION_BUILD_DIR/Firebase.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JSQMessagesViewController.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/JSQSystemSoundPlayer.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/PonyDebugger.framework/Headers" -iquote "$CONFIGURATION_BUILD_DIR/SocketRocket.framework/Headers"
+OTHER_LDFLAGS = $(inherited) -ObjC -framework "Firebase" -framework "JSQMessagesViewController" -framework "JSQSystemSoundPlayer" -framework "PonyDebugger" -framework "SocketRocket"
+PODS_FRAMEWORK_BUILD_PATH = $(BUILD_DIR)/$(CONFIGURATION)$(EFFECTIVE_PLATFORM_NAME)/Pods-LocalTalk
 PODS_ROOT = ${SRCROOT}/Pods
