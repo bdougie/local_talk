@@ -17,7 +17,9 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
-    var peerID: MCPeerID!
+    var peerID : MCPeerID!
+    var message : MessagesCollectionViewController!
+    var tap : UITapGestureRecognizer!
     
     @IBOutlet weak var Conversations : ConversationData?
    
@@ -37,9 +39,29 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         self.browser.delegate = self;
         startHosting(nil);
     }
+    
+//    init(tap: UITapGestureRecognizer) {
+//        self.tap = tap
+//        super.init()
+//    }
+//
+//    required init?(coder aDecoder: NSCoder) {
+//        fatalError("init(coder:) has not been implemented")
+//    }
+//    
+    self.tap = UITapGestureRecognizer(target: self, action: "tapFired:")
+    
+    func tapFired(sender: UITapGestureRecognizer) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
 
+    @IBAction func openConversation(tap: UITapGestureRecognizer) {
+        print("button preseed")
+        self.presentViewController(self.message, animated: true, completion: nil)
+    }
+    
     @IBAction func addConversation(sender: UIBarButtonItem) {
-        print("button pressed ")
+        print("button pressed")
         self.presentViewController(self.browser, animated: true, completion: nil)
     }
     
