@@ -1,5 +1,5 @@
 //
-//  ConversationData.swift
+//  ConversationDataSource.swift
 //  LocalTalk
 //
 //  Created by Brian Douglas on 9/11/15.
@@ -8,14 +8,13 @@
 
 import UIKit
 
-class ConversationData: NSObject, UICollectionViewDataSource {
-    @IBOutlet var collectionview: UICollectionView!
+class ConversationDataSource: NSObject, UICollectionViewDataSource {
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
         let contact : Contact = DataSource.sharedInstance.activePeers[indexPath.row] as! Contact
-        let message = DataSource.sharedInstance.randomMessages[indexPath.row]
+        let messages = [DataSource.sharedInstance.randomConversations[indexPath.row]]
         
         let imageName = contact.image
         let contactName = contact.name
@@ -23,7 +22,7 @@ class ConversationData: NSObject, UICollectionViewDataSource {
         
         cell.cellImageView.image = image
         cell.cellContactName!.text = contactName
-        cell.cellMessagePreview!.text = message.text()
+        cell.cellMessagePreview!.text = messages[0].text()
         
         return cell
     }

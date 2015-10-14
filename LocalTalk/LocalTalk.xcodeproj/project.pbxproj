@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		33113C081BA30B8000A88277 /* ConversationData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationData.swift */; };
+		33113C081BA30B8000A88277 /* ConversationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationDataSource.swift */; };
 		33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* Message.swift */; };
@@ -18,6 +18,7 @@
 		33182A791BAC402200E29BE9 /* 5.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A731BAC402200E29BE9 /* 5.jpg */; };
 		33182A7A1BAC402200E29BE9 /* 6.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 33182A741BAC402200E29BE9 /* 6.jpg */; };
 		33182A7D1BAD612600E29BE9 /* ConversationCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A7C1BAD612600E29BE9 /* ConversationCollectionViewCell.swift */; };
+		334A07B31BC828CE00145AB5 /* MessageCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 334A07B21BC828CE00145AB5 /* MessageCollectionViewCell.swift */; settings = {ASSET_TAGS = (); }; };
 		33BC88151BBC0C9000AF832B /* DataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33BC88141BBC0C9000AF832B /* DataSource.swift */; settings = {ASSET_TAGS = (); }; };
 		33D2CBDC1BA0656500E043AE /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDB1BA0656500E043AE /* AppDelegate.swift */; };
 		33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33D2CBDD1BA0656500E043AE /* ConversationViewController.swift */; };
@@ -41,7 +42,7 @@
 
 /* Begin PBXFileReference section */
 		2EF6A9D6BD01E83C7EF4B029 /* Pods-LocalTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.debug.xcconfig"; sourceTree = "<group>"; };
-		33113C071BA30B8000A88277 /* ConversationData.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationData.swift; sourceTree = "<group>"; };
+		33113C071BA30B8000A88277 /* ConversationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationDataSource.swift; sourceTree = "<group>"; };
 		33182A691BAAF58D00E29BE9 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		33182A6C1BAAF98B00E29BE9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		33182A6F1BAC402200E29BE9 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -51,6 +52,7 @@
 		33182A731BAC402200E29BE9 /* 5.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 5.jpg; sourceTree = "<group>"; };
 		33182A741BAC402200E29BE9 /* 6.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 6.jpg; sourceTree = "<group>"; };
 		33182A7C1BAD612600E29BE9 /* ConversationCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationCollectionViewCell.swift; sourceTree = "<group>"; };
+		334A07B21BC828CE00145AB5 /* MessageCollectionViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageCollectionViewCell.swift; sourceTree = "<group>"; };
 		33BC88141BBC0C9000AF832B /* DataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DataSource.swift; sourceTree = "<group>"; };
 		33BC88161BBC1ACE00AF832B /* MessagesCollectionViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessagesCollectionViewController.swift; sourceTree = "<group>"; };
 		33D2CBD61BA0656500E043AE /* LocalTalk.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = LocalTalk.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -98,7 +100,7 @@
 		33182A681BAAF4C200E29BE9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				33113C071BA30B8000A88277 /* ConversationData.swift */,
+				33113C071BA30B8000A88277 /* ConversationDataSource.swift */,
 				33182A6C1BAAF98B00E29BE9 /* Message.swift */,
 				33BC88141BBC0C9000AF832B /* DataSource.swift */,
 				33182A691BAAF58D00E29BE9 /* Contact.swift */,
@@ -122,6 +124,7 @@
 		33182A7B1BAD60FE00E29BE9 /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				334A07B21BC828CE00145AB5 /* MessageCollectionViewCell.swift */,
 				33182A7C1BAD612600E29BE9 /* ConversationCollectionViewCell.swift */,
 			);
 			name = Views;
@@ -369,7 +372,8 @@
 				33BC88151BBC0C9000AF832B /* DataSource.swift in Sources */,
 				33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */,
 				33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */,
-				33113C081BA30B8000A88277 /* ConversationData.swift in Sources */,
+				33113C081BA30B8000A88277 /* ConversationDataSource.swift in Sources */,
+				334A07B31BC828CE00145AB5 /* MessageCollectionViewCell.swift in Sources */,
 				33EAEC891BBFED69004926D9 /* MessagesCollectionViewController.swift in Sources */,
 				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,
 				33182A7D1BAD612600E29BE9 /* ConversationCollectionViewCell.swift in Sources */,

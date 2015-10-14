@@ -11,17 +11,16 @@ import MultipeerConnectivity
 // http://radar.oreilly.com/2014/09/multipeer-connectivity-on-ios-8-with-swift.html
 // https://www.hackingwithswift.com/read/25/4/invitation-only-mcpeerid
 
-class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate {
+class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, UICollectionViewDelegate {
     let serviceType = "LCOC-Chat"
     
     var browser : MCBrowserViewController!
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID : MCPeerID!
-    var message : MessagesCollectionViewController!
-    var tap : UITapGestureRecognizer!
     
-    @IBOutlet weak var Conversations : ConversationData?
+    @IBOutlet weak var collectionview: UICollectionView!
+    @IBOutlet weak var Conversations : ConversationDataSource?
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,31 +32,27 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         self.browser = MCBrowserViewController(serviceType:serviceType,
             session:self.session)
         
-        // move to a seperate initWithStyleFunc
-        // addToolbarToBroswer()
-        
         self.browser.delegate = self;
         startHosting(nil);
+
+        self.collectionview.delegate = self
     }
     
-//    init(tap: UITapGestureRecognizer) {
-//        self.tap = tap
-//        super.init()
-//    }
-//
-//    required init?(coder aDecoder: NSCoder) {
-//        fatalError("init(coder:) has not been implemented")
-//    }
-//    
-    self.tap = UITapGestureRecognizer(target: self, action: "tapFired:")
-    
-    func tapFired(sender: UITapGestureRecognizer) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+//        http://stackoverflow.com/questions/16380092/passing-data-between-view-controllers-didselectrowsatindexpath-storyboards
+        let conversation = DataSource.sharedInstance.randomConversations[indexPath.row]
+
+        let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
+        
+        messagesCollectionViewController.senderDisplayName = conversation.senderDisplayName()
+        messagesCollectionViewController.senderId = conversation.senderId()
+        messagesCollectionViewController.senderImagePath = conversation.imagePath()
+        
+        self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
     }
 
-    @IBAction func openConversation(tap: UITapGestureRecognizer) {
-        print("button preseed")
-        self.presentViewController(self.message, animated: true, completion: nil)
+    func tapFired(sender: UITapGestureRecognizer) {
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     @IBAction func addConversation(sender: UIBarButtonItem) {
@@ -69,25 +64,15 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func browserViewControllerDidFinish(
         browserViewController: MCBrowserViewController)  {
-            // the Done button was tapped)
-            
-            self.dismissViewControllerAnimated(true, completion: nil)
+        // the Done button was tapped)
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
     
     func browserViewControllerWasCancelled(
         browserViewController: MCBrowserViewController)  {
-            // Called when the browser view controller is cancelled
-            self.dismissViewControllerAnimated(true, completion: nil)
+        // Called when the browser view controller is cancelled
+        self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
-//    func addToolbarToBroswer() {
-//        // attempt to add "Select Recipient to toolbar
-//        browser.topView = UIToolbar.new()
-//        browser.topView.barTintColor = whiteBG
-//        browser.topView.text = "Select Recipient"
-//        browser.topView.alpha = 0.5
-//        browser.addSubview(self.topView)
-//    }
     
     // MARK: MCBrowserSessionDelegate method implementation
     

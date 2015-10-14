@@ -24,7 +24,6 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var batchMessages = true
     var ref: Firebase!
     
-    
     // *** STEP 1: STORE FIREBASE REFERENCES
     var messagesRef: Firebase!
     
@@ -33,14 +32,21 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         messagesRef = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/messages")
         
         // *** STEP 4: RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
-        messagesRef.queryLimitedToNumberOfChildren(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+        messagesRef.queryLimitedToFirst(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
             let text = snapshot.value["text"] as? String
-            let sender = snapshot.value["sender"] as? Contact
+            let senderDetails = snapshot.value["sender"] as AnyObject!
             let imagePath = snapshot.value["imagePath"] as? String
             let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
-            let messageHash = snapshot.value["1"] as? UInt
+            let messageHash = snapshot.value["messageHash"] as? UInt
             
-            let message = Message(sender: sender!, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
+            let senderId = senderDetails!["senderId"] as! NSNumber
+            let senderIdString = senderId.stringValue
+            let senderName = senderDetails!["senderDisplayName"] as! String
+            let senderImagePath = senderDetails!["senderImagePath"] as! String
+            
+            let sender = Contact(id: senderIdString, name: senderName, image: senderImagePath) as Contact
+            
+            let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
             self.messages.append(message)
             self.finishReceivingMessage()
         })
@@ -61,17 +67,17 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     func setupAvatarImage(name: String, imagePath: String?, incoming: Bool) {
-        if let stringUrl = imagePath {
-            if let url = NSURL(string: stringUrl) {
-                if let data = NSData(contentsOfURL: url) {
-                    let image = UIImage(data: data)
-                    let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
-                    let avatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
-                    avatars[name] = avatarImage.avatarImage
-                    return
-                }
-            }
-        }
+//        if let stringUrl = imagePath {
+//            if let url = NSURL(string: stringUrl) {
+//                if let data = NSData(contentsOfURL: url) {
+//                    let image = UIImage(data: data)
+//                    let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
+//                    let avatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
+//                    avatars[name] = avatarImage.avatarImage
+//                    return
+//                }
+//            }
+//        }
         
         // At some point, we failed at getting the image (probably broken URL), so default to avatarColor
         setupAvatarColor(name, incoming: incoming)
@@ -88,29 +94,35 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         
         let separatedName = name.componentsSeparatedByString(" ")
         let one = separatedName[0].characters.first
-        let two = separatedName[1].characters.first
-        let initials : String? = "\(one)\(two)"
+        var initials : String? = "\(one)"
+        if separatedName.count > 1 {
+            let two = separatedName[1].characters.first
+            initials = "\(initials)\(two)"
+        }
+        
         let userImage = JSQMessagesAvatarImageFactory.avatarImageWithUserInitials(initials, backgroundColor: color, textColor: UIColor.blackColor(), font: UIFont.systemFontOfSize(CGFloat(13)), diameter: diameter)
         
         avatars[name] = userImage.avatarImage
     }
     
+    // INIT
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
-        navigationController?.navigationBar.topItem?.title = "Logout"
+        navigationController?.navigationBar.topItem?.title = "Back To Conversations"
         
         senderDisplayName = (senderDisplayName != nil) ? senderDisplayName : "Anonymous"
-        let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
-        if let urlString = profileImageUrl {
-            setupAvatarImage(senderDisplayName, imagePath: urlString as String, incoming: false)
-            senderImagePath = urlString as String
-        } else {
-            setupAvatarColor(senderDisplayName, incoming: false)
-            senderImagePath = ""
-        }
-        
+//        let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
+//        if let urlString = profileImageUrl {
+//            setupAvatarImage(senderDisplayName, imagePath: urlString as String, incoming: false)
+//            senderImagePath = urlString as String
+//        } else {
+//            setupAvatarColor(senderDisplayName, incoming: false)
+//            senderImagePath = ""
+//        }
+        setupAvatarColor(senderDisplayName, incoming: false)
         setupFirebase()
     }
     
@@ -130,7 +142,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     // ACTIONS
     
     func receivedMessagePressed(sender: UIBarButtonItem) {
-        // Simulate reciving message
+        // Simulate receiving message
         showTypingIndicator = !showTypingIndicator
         scrollToBottomAnimated(true)
     }
@@ -213,6 +225,17 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         }
         
         return NSAttributedString(string:message.senderDisplayName())
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageBubbleImageDataSource! {
+        return JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+    }
+    
+    override func collectionView(collectionView: JSQMessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageAvatarImageDataSource! {
+         let diameter = UInt(collectionView.collectionViewLayout.outgoingAvatarViewSize.width)
+        let image = UIImage(named: senderImagePath)
+        
+        return JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView!, layout collectionViewLayout: JSQMessagesCollectionViewFlowLayout!, heightForMessageBubbleTopLabelAtIndexPath indexPath: NSIndexPath!) -> CGFloat {

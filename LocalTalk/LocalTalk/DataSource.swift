@@ -10,7 +10,7 @@ import UIKit
 
 class DataSource: NSObject {
         var activePeers: Array<NSObject> = []
-        var randomMessages: [Message] = []
+        var randomConversations: [Message] = []
     
         class var sharedInstance :DataSource {
             struct Singleton {
@@ -44,7 +44,7 @@ class DataSource: NSObject {
             let message3 = Message(sender: contact3, isMediaMessage: false, messageHash: 3, text: text3, imagePath: contact3.image)
             let message4 = Message(sender: contact4, isMediaMessage: false, messageHash: 4, text: text4, imagePath: contact4.image)
     
-            self.randomMessages = NSArray(objects: message1, message2, message3, message4) as! [Message]
+            self.randomConversations = NSArray(objects: message1, message2, message3, message4) as! [Message]
     }
 
 }
