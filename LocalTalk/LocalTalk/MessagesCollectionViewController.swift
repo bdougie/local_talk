@@ -47,7 +47,9 @@ class MessagesCollectionViewController: JSQMessagesViewController {
             let sender = Contact(id: senderIdString, name: senderName, image: senderImagePath) as Contact
             
             let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
-            self.messages.append(message)
+            if senderName == self.senderDisplayName {
+                self.messages.append(message)
+            }
             self.finishReceivingMessage()
         })
     }
@@ -228,7 +230,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageBubbleImageDataSource! {
-        return JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+        return JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageAvatarImageDataSource! {
