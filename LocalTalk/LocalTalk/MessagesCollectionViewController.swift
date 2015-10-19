@@ -21,6 +21,8 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var outgoingBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
     var incomingBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     var senderImagePath: String!
+    var messageHash: UInt!
+    var isMediaMessage: Bool!
     var batchMessages = true
     var ref: Firebase!
     
@@ -39,12 +41,11 @@ class MessagesCollectionViewController: JSQMessagesViewController {
             let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
             let messageHash = snapshot.value["messageHash"] as? UInt
             
-            let senderId = senderDetails!["senderId"] as! NSNumber
-            let senderIdString = senderId.stringValue
+            let senderId = senderDetails!["senderId"] as? String
             let senderName = senderDetails!["senderDisplayName"] as! String
             let senderImagePath = senderDetails!["senderImagePath"] as! String
             
-            let sender = Contact(id: senderIdString, name: senderName, image: senderImagePath) as Contact
+            let sender = Contact(id: senderId!, name: senderName, image: senderImagePath) as Contact
             
             let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
             if senderName == self.senderDisplayName {
@@ -54,13 +55,22 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         })
     }
     
-    func sendMessage(text: String!, sender: String!) {
+    func sendMessage(text: String!, senderId: String!, senderDisplayName: String!) {
         // *** STEP 3: ADD A MESSAGE TO FIREBASE
-        messagesRef.childByAutoId().setValue([
+        let messageObject = [
             "text":text,
-            "sender":sender,
-            "imagePath":senderImagePath
-            ])
+            "imagePath":senderImagePath,
+            "isMediaMessage":self.isMediaMessage,
+            "messageHash":self.messageHash,
+            "sender": [
+                "senderId":senderId,
+                "senderDisplayName":senderDisplayName,
+                "senderImagePath":senderImagePath
+                ]
+            
+        ]
+        
+        messagesRef.childByAutoId().setValue(messageObject)
     }
     
     func tempSendMessage(text: String!, sender: Contact) {
@@ -149,12 +159,12 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         scrollToBottomAnimated(true)
     }
     
-    func didPressSendButton(button: UIButton!, withMessageText text: String!, sender: String!, date: NSDate!) {
+    override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
         
-        sendMessage(text, sender: sender)
+        sendMessage(text, senderId: senderId, senderDisplayName: senderDisplayName)
         
-        finishSendingMessage()
+        self.finishSendingMessage()
     }
     
     override func didPressAccessoryButton(sender: UIButton!) {
