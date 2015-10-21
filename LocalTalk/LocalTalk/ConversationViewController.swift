@@ -44,9 +44,9 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
 
         let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
         
-        messagesCollectionViewController.senderDisplayName = conversation.senderDisplayName()
-        messagesCollectionViewController.senderId = conversation.senderId()
-        messagesCollectionViewController.senderImagePath = conversation.imagePath()
+        messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
+        messagesCollectionViewController.senderId = "6"
+        messagesCollectionViewController.senderImagePath = "6.jpg"
         messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
         messagesCollectionViewController.messageHash = conversation.messageHash()
         

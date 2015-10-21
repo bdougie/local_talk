@@ -48,7 +48,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
             let sender = Contact(id: senderId!, name: senderName, image: senderImagePath) as Contact
             
             let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
-            if senderName == self.senderDisplayName {
+            if messageHash == self.messageHash {
                 self.messages.append(message)
             }
             self.finishReceivingMessage()
@@ -79,17 +79,17 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     func setupAvatarImage(name: String, imagePath: String?, incoming: Bool) {
-//        if let stringUrl = imagePath {
-//            if let url = NSURL(string: stringUrl) {
-//                if let data = NSData(contentsOfURL: url) {
-//                    let image = UIImage(data: data)
-//                    let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
-//                    let avatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
-//                    avatars[name] = avatarImage.avatarImage
-//                    return
-//                }
-//            }
-//        }
+        if let stringUrl = imagePath {
+            if let url = NSURL(string: stringUrl) {
+                if let data = NSData(contentsOfURL: url) {
+                    let image = UIImage(data: data)
+                    let diameter = incoming ? UInt(collectionView!.collectionViewLayout.incomingAvatarViewSize.width) : UInt(collectionView!.collectionViewLayout.outgoingAvatarViewSize.width)
+                    let avatarImage = JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
+                    avatars[name] = avatarImage.avatarImage
+                    return
+                }
+            }
+        }
         
         // At some point, we failed at getting the image (probably broken URL), so default to avatarColor
         setupAvatarColor(name, incoming: incoming)
@@ -123,7 +123,8 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         super.viewDidLoad()
         inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
-        navigationController?.navigationBar.topItem?.title = "Back To Conversations"
+        navigationController?.navigationBar.topItem?.title = "Back"
+        navigationController?.navigationItem.title = "title goes here"
         
         senderDisplayName = (senderDisplayName != nil) ? senderDisplayName : "Anonymous"
 //        let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
@@ -134,7 +135,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
 //            setupAvatarColor(senderDisplayName, incoming: false)
 //            senderImagePath = ""
 //        }
-        setupAvatarColor(senderDisplayName, incoming: false)
+        setupAvatarColor(senderDisplayName, incoming: true)
         setupFirebase()
     }
     
@@ -240,11 +241,16 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView, messageBubbleImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageBubbleImageDataSource! {
-        return JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+        let message = messages[indexPath.item]
+        if message.senderDisplayName() == senderDisplayName {
+            return JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleBlueColor())
+        } else {
+            return JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
+        }
     }
     
     override func collectionView(collectionView: JSQMessagesCollectionView, avatarImageDataForItemAtIndexPath indexPath: NSIndexPath) -> JSQMessageAvatarImageDataSource! {
-         let diameter = UInt(collectionView.collectionViewLayout.outgoingAvatarViewSize.width)
+        let diameter = UInt(collectionView.collectionViewLayout.outgoingAvatarViewSize.width)
         let image = UIImage(named: senderImagePath)
         
         return JSQMessagesAvatarImageFactory.avatarImageWithImage(image, diameter: diameter)
