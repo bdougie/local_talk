@@ -40,7 +40,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
 //        http://stackoverflow.com/questions/16380092/passing-data-between-view-controllers-didselectrowsatindexpath-storyboards
-        let conversation = DataSource.sharedInstance.randomConversations[indexPath.row]
+        let conversation = DataSource.sharedInstance.allConversations[indexPath.row]
 
         let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
         

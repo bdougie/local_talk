@@ -14,7 +14,7 @@ class ConversationDataSource: NSObject, UICollectionViewDataSource {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
         let contact : Contact = DataSource.sharedInstance.activePeers[indexPath.row] as! Contact
-        let messages = [DataSource.sharedInstance.randomConversations[indexPath.row]]
+        let messages = [DataSource.sharedInstance.allConversations[indexPath.row]]
         
         let imageName = contact.image
         let contactName = contact.name
@@ -22,7 +22,7 @@ class ConversationDataSource: NSObject, UICollectionViewDataSource {
         
         cell.cellImageView.image = image
         cell.cellContactName!.text = contactName
-        cell.cellMessagePreview!.text = messages[0].text()
+        cell.cellMessagePreview!.text = messages.last!.text()
         
         return cell
     }

@@ -26,35 +26,20 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var batchMessages = true
     var ref: Firebase!
     
-    // *** STEP 1: STORE FIREBASE REFERENCES
-    var messagesRef: Firebase!
-    
-    func setupFirebase() {
-        // *** STEP 2: SETUP FIREBASE
-        messagesRef = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/messages")
-        
-        // *** STEP 4: RECEIVE MESSAGES FROM FIREBASE (limited to latest 25 messages)
-        messagesRef.queryLimitedToFirst(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
-            let text = snapshot.value["text"] as? String
-            let senderDetails = snapshot.value["sender"] as AnyObject!
-            let imagePath = snapshot.value["imagePath"] as? String
-            let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
-            let messageHash = snapshot.value["messageHash"] as? UInt
-            
-            let senderId = senderDetails!["senderId"] as? String
-            let senderName = senderDetails!["senderDisplayName"] as! String
-            let senderImagePath = senderDetails!["senderImagePath"] as! String
-            
-            let sender = Contact(id: senderId!, name: senderName, image: senderImagePath) as Contact
-            
-            let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
-            if messageHash == self.messageHash {
+    var messagesRef = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/messages")
+
+    func setupMessages() {
+//        DataSource.sharedInstance.setupFirebase()
+        let conversations = DataSource.sharedInstance.allConversations
+
+        for message in conversations {
+            if message.messageHash() == self.messageHash {
                 self.messages.append(message)
             }
-            self.finishReceivingMessage()
-        })
+        }
+        self.finishReceivingMessage()
     }
-    
+
     func sendMessage(text: String!, senderId: String!, senderDisplayName: String!) {
         // *** STEP 3: ADD A MESSAGE TO FIREBASE
         let messageObject = [
@@ -136,7 +121,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
 //            senderImagePath = ""
 //        }
         setupAvatarColor(senderDisplayName, incoming: true)
-        setupFirebase()
+        setupMessages()
     }
     
     override func viewDidAppear(animated: Bool) {
