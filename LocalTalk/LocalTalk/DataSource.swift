@@ -62,6 +62,7 @@ class DataSource: NSObject {
 			let imagePath = snapshot.value["imagePath"] as? String
 			let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
 			let messageHash = snapshot.value["messageHash"] as? UInt
+			let conversationId = snapshot.value["conversationId"] as! String
 			
 			let senderId = senderDetails!["senderId"] as? String
 			let senderName = senderDetails!["senderDisplayName"] as! String
@@ -69,7 +70,7 @@ class DataSource: NSObject {
 			
 			let sender = Contact(id: senderId!, name: senderName, image: senderImagePath) as Contact
 			
-			let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath)
+			let message = Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId)
 			
 			self.allConversations.append(message)
 		})

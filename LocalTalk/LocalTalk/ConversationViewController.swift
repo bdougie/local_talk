@@ -47,6 +47,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
         messagesCollectionViewController.senderId = "6"
         messagesCollectionViewController.senderImagePath = "6.jpg"
+        messagesCollectionViewController.conversationId = conversation.conversationId()
         messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
         messagesCollectionViewController.messageHash = conversation.messageHash()
         

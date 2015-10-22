@@ -22,6 +22,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var incomingBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     var senderImagePath: String!
     var messageHash: UInt!
+    var conversationId: String!
     var isMediaMessage: Bool!
     var batchMessages = true
     var ref: Firebase!
@@ -33,7 +34,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         let conversations = DataSource.sharedInstance.allConversations
 
         for message in conversations {
-            if message.messageHash() == self.messageHash {
+            if message.conversationId() == self.conversationId {
                 self.messages.append(message)
             }
         }
@@ -51,15 +52,15 @@ class MessagesCollectionViewController: JSQMessagesViewController {
                 "senderId":senderId,
                 "senderDisplayName":senderDisplayName,
                 "senderImagePath":senderImagePath
-                ]
-            
+                ],
+            "conversationId":conversationId
         ]
         
         messagesRef.childByAutoId().setValue(messageObject)
     }
     
     func tempSendMessage(text: String!, sender: Contact) {
-        let message = Message(sender: sender, isMediaMessage: true, messageHash: 1, text: text, imagePath: senderImagePath)
+        let message = Message(sender: sender, isMediaMessage: true, messageHash: 1, text: text, imagePath: senderImagePath, conversationId: "1")
         messages.append(message)
     }
     
