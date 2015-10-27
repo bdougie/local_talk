@@ -36,6 +36,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         startHosting(nil);
 
         self.collectionview.delegate = self
+//        self.collectionview.dataSource = self
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
@@ -63,6 +64,16 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         self.presentViewController(self.browser, animated: true, completion: nil)
     }
     
+    // MARK: UICollectionViewDataSource method implementation
+//    
+//    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+//        return DataSource.sharedInstance.allConversations.count
+//    }
+//    
+//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+//        return nil
+//    }
+//    
      // MARK: MCBrowserViewControllerDelegate method implementation
     
     func browserViewControllerDidFinish(
@@ -145,7 +156,5 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         mcBrowser.delegate = self
         presentViewController(mcBrowser, animated: true, completion: nil)
     }
-
-
 }
 

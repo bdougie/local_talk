@@ -13,21 +13,22 @@ class ConversationDataSource: NSObject, UICollectionViewDataSource {
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
-        let contact : Contact = DataSource.sharedInstance.activePeers[indexPath.row] as! Contact
-        let messages = [DataSource.sharedInstance.allConversations[indexPath.row]]
+        let _ : Contact = DataSource.sharedInstance.activePeers[indexPath.row] 
+        let message = DataSource.sharedInstance.allConversations[indexPath.row]
         
-        let imageName = contact.image
-        let contactName = contact.name
+        let imageName = message.imagePath()
+        let contactName = message.senderDisplayName()
         let image = UIImage(named: imageName!)
         
         cell.cellImageView.image = image
         cell.cellContactName!.text = contactName
-        cell.cellMessagePreview!.text = messages.last!.text()
+        cell.cellMessagePreview!.text = message.text()
         
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        DataSource.sharedInstance.setupFirebase()
         print("Got \(DataSource.sharedInstance.activePeers.count) items");
         return DataSource.sharedInstance.activePeers.count
     }
