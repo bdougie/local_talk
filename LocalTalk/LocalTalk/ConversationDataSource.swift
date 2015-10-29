@@ -28,7 +28,6 @@ class ConversationDataSource: NSObject, UICollectionViewDataSource {
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        DataSource.sharedInstance.setupFirebase()
         print("Got \(DataSource.sharedInstance.activePeers.count) items");
         return DataSource.sharedInstance.activePeers.count
     }

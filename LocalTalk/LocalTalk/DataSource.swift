@@ -25,6 +25,7 @@ class DataSource: NSObject {
 	init(activePeers: Array<Contact> = []) {
 		self.activePeers = activePeers
 		super.init()
+		setupFirebase()
 	}
 
 	var conversationsRef: Firebase!
@@ -36,7 +37,20 @@ class DataSource: NSObject {
 		setupContacts()
 		print("Got \(DataSource.sharedInstance.activePeers.count) items");
 		setupConversations(ref)
+//		createNotification()
+		NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "firebaseSetup", object: nil));
 	}
+	
+//	func createNotification() {
+//		let title = "firebase setup"
+//		let message = "just saying"
+//		
+//		NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "firebaseSetup", object: nil));
+//		
+//		let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
+//		alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil))
+//		ConversationViewController.presentViewController(alert);
+//	}
 	
 	func setupContacts() {
 		let url =  "https://resplendent-torch-6823.firebaseio.com/contacts"
@@ -108,5 +122,12 @@ class DataSource: NSObject {
 //				
 //			})
 //		}
+//	}
+//	
+//	func pathForFilename(filename: String) -> String {
+//		var paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)
+//		var documentsDirectory: String = paths.firstObject()
+//		var dataPath: String = documentsDirectory.stringByAppendingPathComponent(filename)
+//		return dataPath
 //	}
 }

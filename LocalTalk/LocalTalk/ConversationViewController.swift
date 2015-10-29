@@ -25,6 +25,8 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
+                NSNotificationCenter.defaultCenter().addObserver(self, selector: "firebaseSetup", name: "firebaseSetup", object: nil)
+        
         self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
         self.session = MCSession(peer: peerID)
         self.session.delegate = self
@@ -36,7 +38,15 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         startHosting(nil);
 
         self.collectionview.delegate = self
+        
+        self.collectionview.reloadData()
+        
+
 //        self.collectionview.dataSource = self
+    }
+    
+    func firebaseSetup(){
+        print("hello world3");
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
