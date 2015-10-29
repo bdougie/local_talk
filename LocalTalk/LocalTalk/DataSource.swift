@@ -15,12 +15,6 @@ class DataSource: NSObject {
 	var conversationMessages: [Message] = []
 	
 	class var sharedInstance :DataSource {
-//		struct Singleton {
-//			static let instance = DataSource()
-//		}
-//
-//		return Singleton.instance
-		
 		struct Static {
 			static var onceToken: dispatch_once_t = 0
 			static var instance: DataSource? = nil
@@ -35,7 +29,6 @@ class DataSource: NSObject {
 	init(activePeers: Array<Contact> = []) {
 		self.activePeers = activePeers
 		super.init()
-//		setupFirebase()
 	}
 
 	var conversationsRef: Firebase!
@@ -47,20 +40,12 @@ class DataSource: NSObject {
 		setupContacts()
 		print("Got \(self.activePeers.count) items");
 		setupConversations(ref)
-//		createNotification()
 
 	}
 	
-//	func createNotification() {
-//		let title = "firebase setup"
-//		let message = "just saying"
-//		
-//		NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "firebaseSetup", object: nil));
-//		
-//		let alert = UIAlertController(title: title, message: message, preferredStyle: UIAlertControllerStyle.Alert)
-//		alert.addAction(UIAlertAction(title: "ok", style: UIAlertActionStyle.Default, handler: nil))
-//		ConversationViewController.presentViewController(alert);
-//	}
+	func createNotification() {
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "conversationsUpdated", object: nil));
+    }
 	
 	func setupContacts() {
 		let url =  "https://resplendent-torch-6823.firebaseio.com/contacts"
@@ -75,8 +60,6 @@ class DataSource: NSObject {
 			
 			self.activePeers.append(contact)
 			print("contacts pulled: \(self.activePeers.count)")
-			print("Got \(DataSource.sharedInstance.activePeers.count) items");
-
 		})
 	}
 	
@@ -88,10 +71,8 @@ class DataSource: NSObject {
 				let message = self.createMessageFromSnapshot(snapshot)
 				print("create messages was called")
 				self.allConversations.append(message)
-				print("conversation count: \(self.allConversations.count)")
-				NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "conversationsUpdated", object: nil));
+				self.createNotification()
 			})
-			print("create messages was called33")
 		})
 	}
 	

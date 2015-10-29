@@ -8,8 +8,6 @@
 
 import UIKit
 import MultipeerConnectivity
-// http://radar.oreilly.com/2014/09/multipeer-connectivity-on-ios-8-with-swift.html
-// https://www.hackingwithswift.com/read/25/4/invitation-only-mcpeerid
 
 class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     let serviceType = "LCOC-Chat"
@@ -20,7 +18,6 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     var peerID : MCPeerID!
     
     @IBOutlet weak var collectionview: UICollectionView!
-    @IBOutlet weak var Conversations : ConversationDataSource?
    
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -38,14 +35,39 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         startHosting(nil);
 
         self.collectionview.delegate = self
-    
         self.collectionview.dataSource = self
-//        self.collectionview.reloadData()
     }
     
-//    override func viewDidAppear(animated: Bool) {
-//        self.collectionview.reloadData()
-//    }
+    func conversationsUpdated(){
+        print("reloaded data");
+        self.collectionview.reloadData()
+    }
+    
+    func tapFired(sender: UITapGestureRecognizer) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    @IBAction func addConversation(sender: UIBarButtonItem) {
+        print("button pressed")
+        self.presentViewController(self.browser, animated: true, completion: nil)
+    }
+    
+    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
+        let conversation = DataSource.sharedInstance.allConversations[indexPath.row]
+
+        let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
+        
+        messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
+        messagesCollectionViewController.senderId = "6"
+        messagesCollectionViewController.senderImagePath = "6.jpg"
+        messagesCollectionViewController.conversationId = conversation.conversationId()
+        messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
+        messagesCollectionViewController.messageHash = conversation.messageHash()
+        
+        self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
+    }
+
+    // MARK: UICollectionViewDataSource method implementation
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
@@ -65,50 +87,9 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        print("Got \(DataSource.sharedInstance.allConversations.count) items");
         return DataSource.sharedInstance.allConversations.count
     }
     
-    func conversationsUpdated(){
-        print("hello world3");
-        self.collectionview.reloadData()
-    }
-    
-    func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-//        http://stackoverflow.com/questions/16380092/passing-data-between-view-controllers-didselectrowsatindexpath-storyboards
-        let conversation = DataSource.sharedInstance.allConversations[indexPath.row]
-
-        let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
-        
-        messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
-        messagesCollectionViewController.senderId = "6"
-        messagesCollectionViewController.senderImagePath = "6.jpg"
-        messagesCollectionViewController.conversationId = conversation.conversationId()
-        messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
-        messagesCollectionViewController.messageHash = conversation.messageHash()
-        
-        self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
-    }
-
-    func tapFired(sender: UITapGestureRecognizer) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func addConversation(sender: UIBarButtonItem) {
-        print("button pressed")
-        self.presentViewController(self.browser, animated: true, completion: nil)
-    }
-    
-    // MARK: UICollectionViewDataSource method implementation
-//    
-//    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-//        return DataSource.sharedInstance.allConversations.count
-//    }
-//    
-//    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
-//        return nil
-//    }
-//    
      // MARK: MCBrowserViewControllerDelegate method implementation
     
     func browserViewControllerDidFinish(

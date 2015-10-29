@@ -30,7 +30,6 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var messagesRef = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/messages")
 
     func setupMessages() {
-//        DataSource.sharedInstance.setupFirebase()
         let conversations = DataSource.sharedInstance.allConversations
 
         for message in conversations {
@@ -42,7 +41,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     }
 
     func sendMessage(text: String!, senderId: String!, senderDisplayName: String!) {
-        // *** STEP 3: ADD A MESSAGE TO FIREBASE
+        // ADD A MESSAGE TO FIREBASE
         let messageObject = [
             "text":text,
             "imagePath":senderImagePath,

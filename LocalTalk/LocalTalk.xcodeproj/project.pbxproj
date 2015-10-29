@@ -7,7 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		33113C081BA30B8000A88277 /* ConversationDataSource.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33113C071BA30B8000A88277 /* ConversationDataSource.swift */; };
 		33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6B1BAAF6F000E29BE9 /* Contact.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A691BAAF58D00E29BE9 /* Contact.swift */; };
 		33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */ = {isa = PBXBuildFile; fileRef = 33182A6C1BAAF98B00E29BE9 /* Message.swift */; };
@@ -42,7 +41,6 @@
 
 /* Begin PBXFileReference section */
 		2EF6A9D6BD01E83C7EF4B029 /* Pods-LocalTalk.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-LocalTalk.debug.xcconfig"; path = "Pods/Target Support Files/Pods-LocalTalk/Pods-LocalTalk.debug.xcconfig"; sourceTree = "<group>"; };
-		33113C071BA30B8000A88277 /* ConversationDataSource.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ConversationDataSource.swift; sourceTree = "<group>"; };
 		33182A691BAAF58D00E29BE9 /* Contact.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Contact.swift; sourceTree = "<group>"; };
 		33182A6C1BAAF98B00E29BE9 /* Message.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Message.swift; sourceTree = "<group>"; };
 		33182A6F1BAC402200E29BE9 /* 1.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = 1.jpg; sourceTree = "<group>"; };
@@ -100,7 +98,6 @@
 		33182A681BAAF4C200E29BE9 /* Models */ = {
 			isa = PBXGroup;
 			children = (
-				33113C071BA30B8000A88277 /* ConversationDataSource.swift */,
 				33182A6C1BAAF98B00E29BE9 /* Message.swift */,
 				33BC88141BBC0C9000AF832B /* DataSource.swift */,
 				33182A691BAAF58D00E29BE9 /* Contact.swift */,
@@ -372,7 +369,6 @@
 				33BC88151BBC0C9000AF832B /* DataSource.swift in Sources */,
 				33182A6D1BAAF98B00E29BE9 /* Message.swift in Sources */,
 				33D2CBDE1BA0656500E043AE /* ConversationViewController.swift in Sources */,
-				33113C081BA30B8000A88277 /* ConversationDataSource.swift in Sources */,
 				334A07B31BC828CE00145AB5 /* MessageCollectionViewCell.swift in Sources */,
 				33EAEC891BBFED69004926D9 /* MessagesCollectionViewController.swift in Sources */,
 				33182A6A1BAAF58D00E29BE9 /* Contact.swift in Sources */,
