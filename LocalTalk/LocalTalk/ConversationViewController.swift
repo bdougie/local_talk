@@ -11,7 +11,7 @@ import MultipeerConnectivity
 // http://radar.oreilly.com/2014/09/multipeer-connectivity-on-ios-8-with-swift.html
 // https://www.hackingwithswift.com/read/25/4/invitation-only-mcpeerid
 
-class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, UICollectionViewDelegate {
+class ConversationViewController: UIViewController, MCBrowserViewControllerDelegate, MCSessionDelegate, UICollectionViewDelegate, UICollectionViewDataSource {
     let serviceType = "LCOC-Chat"
     
     var browser : MCBrowserViewController!
@@ -25,7 +25,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     override func viewDidLoad() {
         super.viewDidLoad()
         
-                NSNotificationCenter.defaultCenter().addObserver(self, selector: "firebaseSetup", name: "firebaseSetup", object: nil)
+        NSNotificationCenter.defaultCenter().addObserver(self, selector: "conversationsUpdated", name: "conversationsUpdated", object: nil)
         
         self.peerID = MCPeerID(displayName: UIDevice.currentDevice().name)
         self.session = MCSession(peer: peerID)
@@ -38,15 +38,40 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         startHosting(nil);
 
         self.collectionview.delegate = self
-        
-        self.collectionview.reloadData()
-        
-
-//        self.collectionview.dataSource = self
+    
+        self.collectionview.dataSource = self
+//        self.collectionview.reloadData()
     }
     
-    func firebaseSetup(){
+//    override func viewDidAppear(animated: Bool) {
+//        self.collectionview.reloadData()
+//    }
+    
+    func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
+        let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
+        
+        let _ : Contact = DataSource.sharedInstance.activePeers[indexPath.row]
+        let message = DataSource.sharedInstance.allConversations[indexPath.row]
+        
+        let imageName = message.imagePath()
+        let contactName = message.senderDisplayName()
+        let image = UIImage(named: imageName!)
+        
+        cell.cellImageView.image = image
+        cell.cellContactName!.text = contactName
+        cell.cellMessagePreview!.text = message.text()
+        
+        return cell
+    }
+    
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        print("Got \(DataSource.sharedInstance.allConversations.count) items");
+        return DataSource.sharedInstance.allConversations.count
+    }
+    
+    func conversationsUpdated(){
         print("hello world3");
+        self.collectionview.reloadData()
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {

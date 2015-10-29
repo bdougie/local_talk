@@ -15,17 +15,27 @@ class DataSource: NSObject {
 	var conversationMessages: [Message] = []
 	
 	class var sharedInstance :DataSource {
-		struct Singleton {
-			static let instance = DataSource()
+//		struct Singleton {
+//			static let instance = DataSource()
+//		}
+//
+//		return Singleton.instance
+		
+		struct Static {
+			static var onceToken: dispatch_once_t = 0
+			static var instance: DataSource? = nil
 		}
-
-		return Singleton.instance
+		dispatch_once(&Static.onceToken) {
+			Static.instance = DataSource()
+			Static.instance?.setupFirebase()
+		}
+		return Static.instance!
 	}
 
 	init(activePeers: Array<Contact> = []) {
 		self.activePeers = activePeers
 		super.init()
-		setupFirebase()
+//		setupFirebase()
 	}
 
 	var conversationsRef: Firebase!
@@ -35,10 +45,10 @@ class DataSource: NSObject {
 		let ref = Firebase(url: url)
 
 		setupContacts()
-		print("Got \(DataSource.sharedInstance.activePeers.count) items");
+		print("Got \(self.activePeers.count) items");
 		setupConversations(ref)
 //		createNotification()
-		NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "firebaseSetup", object: nil));
+
 	}
 	
 //	func createNotification() {
@@ -79,7 +89,9 @@ class DataSource: NSObject {
 				print("create messages was called")
 				self.allConversations.append(message)
 				print("conversation count: \(self.allConversations.count)")
+				NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "conversationsUpdated", object: nil));
 			})
+			print("create messages was called33")
 		})
 	}
 	
