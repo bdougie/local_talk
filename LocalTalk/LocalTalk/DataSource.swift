@@ -11,9 +11,10 @@ import Firebase
 
 class DataSource: NSObject {
 	var activePeers: [Contact] = []
-	var allConversations: [Message] = []
+	var previewConversations: [Message] = []
 	var conversationMessages: [Message] = []
-	
+    var conversationsRef: Firebase!
+
 	class var sharedInstance :DataSource {
 		struct Static {
 			static var onceToken: dispatch_once_t = 0
@@ -31,20 +32,16 @@ class DataSource: NSObject {
 		super.init()
 	}
 
-	var conversationsRef: Firebase!
-
 	func setupFirebase() {
 		let url =  "https://resplendent-torch-6823.firebaseio.com/conversations"
 		let ref = Firebase(url: url)
 
 		setupContacts()
-		print("Got \(self.activePeers.count) items");
 		setupConversations(ref)
-
 	}
 	
-	func createNotification() {
-        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: "conversationsUpdated", object: nil));
+	func createNotification(name: String) {
+        NSNotificationCenter.defaultCenter().postNotification(NSNotification(name: name, object: nil));
     }
 	
 	func setupContacts() {
@@ -67,19 +64,17 @@ class DataSource: NSObject {
 		ref.queryOrderedByValue().observeEventType(FEventType.ChildAdded, withBlock: { (convoId) in
 			let conversationKey = convoId.key
 		
-			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToLast(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
 				let message = self.createMessageFromSnapshot(snapshot)
-				print("create messages was called")
-				self.allConversations.append(message)
-				self.createNotification()
+				self.previewConversations.append(message)
+				self.createNotification("conversationsUpdated")
 			})
-		})
-	}
-	
-	func setupMessages(ref: Firebase) {
-		ref.queryLimitedToFirst(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
-			let message = self.createMessageFromSnapshot(snapshot)
-			self.conversationMessages.append(message)
+			
+			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToLast(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+				let message = self.createMessageFromSnapshot(snapshot)
+				self.conversationMessages.append(message)
+				self.createNotification("conversationsUpdated")
+			})
 		})
 	}
 	
@@ -99,28 +94,4 @@ class DataSource: NSObject {
 		
 		return Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId)
 	}
-	
-//	func saveToDisk() {
-//		if self.activePeers.count > 0 {
-//			dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), {
-//				var numberOfItemsToSave: UInt = MIN(self.activePeers.count, 50)
-//				var mediaItemsToSave: [AnyObject] = self.activePeers.subarrayWithRange(NSMakeRange(0, numberOfItemsToSave))
-//				var fullPath: String = self.pathForFilename(NSStringFromSelector("mediaItems"))
-//				var mediaItemData: NSData = NSKeyedArchiver.archivedDataWithRootObject(mediaItemsToSave)
-//				var dataError: NSErrorPointer
-//				var wroteSuccessfully: Bool = mediaItemData.writeToFile(fullPath, options: NSDataWritingAtomic | NSDataWritingFileProtectionCompleteUnlessOpen, error: &dataError)
-//				if !wroteSuccessfully {
-//					NSLog("Couldn't write file: %@", dataError)
-//				}
-//				
-//			})
-//		}
-//	}
-//	
-//	func pathForFilename(filename: String) -> String {
-//		var paths: [AnyObject] = NSSearchPathForDirectoriesInDomains(NSCachesDirectory, NSUserDomainMask, true)
-//		var documentsDirectory: String = paths.firstObject()
-//		var dataPath: String = documentsDirectory.stringByAppendingPathComponent(filename)
-//		return dataPath
-//	}
 }

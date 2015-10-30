@@ -39,7 +39,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     func conversationsUpdated(){
-        print("reloaded data");
+        print("reloaded preview data");
         self.collectionview.reloadData()
     }
     
@@ -53,16 +53,18 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let conversation = DataSource.sharedInstance.allConversations[indexPath.row]
+        let conversation = DataSource.sharedInstance.previewConversations[indexPath.row]
 
         let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
+        let conversationId = conversation.conversationId()
         
         messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
         messagesCollectionViewController.senderId = "6"
-        messagesCollectionViewController.senderImagePath = "6.jpg"
+        messagesCollectionViewController.senderImagePath = conversation.imagePath()
         messagesCollectionViewController.conversationId = conversation.conversationId()
         messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
         messagesCollectionViewController.messageHash = conversation.messageHash()
+        messagesCollectionViewController.messagesRefUrl = "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/messages"
         
         self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
     }
@@ -72,8 +74,8 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
-        let _ : Contact = DataSource.sharedInstance.activePeers[indexPath.row]
-        let message = DataSource.sharedInstance.allConversations[indexPath.row]
+//        let _ : Contact = DataSource.sharedInstance.activePeers[indexPath.row]
+        let message = DataSource.sharedInstance.previewConversations[indexPath.row]
         
         let imageName = message.imagePath()
         let contactName = message.senderDisplayName()
@@ -87,7 +89,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return DataSource.sharedInstance.allConversations.count
+        return DataSource.sharedInstance.previewConversations.count
     }
     
      // MARK: MCBrowserViewControllerDelegate method implementation

@@ -26,27 +26,33 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var isMediaMessage: Bool!
     var batchMessages = true
     var ref: Firebase!
+    var refString: String!
+    var messagesRefUrl : String!
     
-    var messagesRef = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/messages")
-
+    func messagesRef() -> Firebase {
+        return  Firebase(url: self.messagesRefUrl)
+    }
+    
     func setupMessages() {
-        let conversations = DataSource.sharedInstance.allConversations
-
-        for message in conversations {
+        let conversations = DataSource.sharedInstance.conversationMessages
+        let sortedConversations = conversations.sort({ $0.messageHash() < $1.messageHash() })
+        
+        for message in sortedConversations {
             if message.conversationId() == self.conversationId {
                 self.messages.append(message)
             }
         }
         self.finishReceivingMessage()
     }
-
+    
     func sendMessage(text: String!, senderId: String!, senderDisplayName: String!) {
         // ADD A MESSAGE TO FIREBASE
+        let hash = UInt(self.generateMessageHash())
         let messageObject = [
             "text":text,
             "imagePath":senderImagePath,
             "isMediaMessage":self.isMediaMessage,
-            "messageHash":self.messageHash,
+            "messageHash":hash,
             "sender": [
                 "senderId":senderId,
                 "senderDisplayName":senderDisplayName,
@@ -55,7 +61,12 @@ class MessagesCollectionViewController: JSQMessagesViewController {
             "conversationId":conversationId
         ]
         
-        messagesRef.childByAutoId().setValue(messageObject)
+        messagesRef().childByAutoId().setValue(messageObject)
+//        self.collectionView?.reloadData()
+    }
+    
+    func generateMessageHash() -> UInt32 {
+       return arc4random_uniform(999999)
     }
     
     func tempSendMessage(text: String!, sender: Contact) {
@@ -106,6 +117,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         inputToolbar!.contentView!.leftBarButtonItem = nil
         automaticallyScrollsToMostRecentMessage = true
         navigationController?.navigationBar.topItem?.title = "Back"
