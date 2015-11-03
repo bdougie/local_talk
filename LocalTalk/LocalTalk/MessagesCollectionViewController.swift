@@ -21,6 +21,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var outgoingBubbleImage = JSQMessagesBubbleImageFactory().outgoingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleLightGrayColor())
     var incomingBubbleImage = JSQMessagesBubbleImageFactory().incomingMessagesBubbleImageWithColor(UIColor.jsq_messageBubbleGreenColor())
     var senderImagePath: String!
+    var senderDeviceName: String!
     var messageHash: UInt!
     var conversationId: String!
     var isMediaMessage: Bool!
@@ -56,8 +57,9 @@ class MessagesCollectionViewController: JSQMessagesViewController {
             "sender": [
                 "senderId":senderId,
                 "senderDisplayName":senderDisplayName,
-                "senderImagePath":senderImagePath
-                ],
+                "senderImagePath":senderImagePath,
+                "senderDeviceName":senderDeviceName
+            ],
             "conversationId":conversationId
         ]
         

@@ -31,6 +31,10 @@ class DataSource: NSObject {
 		self.activePeers = activePeers
 		super.init()
 	}
+	
+	func removeObjectFromPreviewConversationsAtIndex(index: Int) {
+		self.previewConversations.removeAtIndex(index)
+	}
 
 	func setupFirebase() {
 		let url =  "https://resplendent-torch-6823.firebaseio.com/conversations"
@@ -52,8 +56,9 @@ class DataSource: NSObject {
 			let senderId = snapshot.value["senderId"] as! String
 			let senderName = snapshot.value["senderDisplayName"] as! String
 			let senderImagePath = snapshot.value["senderImagePath"] as! String
+			let senderDeviceName = snapshot.value["senderDeviceName"] as! String
 			
-			let contact = Contact(id: senderId, name: senderName, image: senderImagePath) as Contact
+			let contact = Contact(id: senderId, name: senderName, deviceName: senderDeviceName, image: senderImagePath) as Contact
 			
 			self.activePeers.append(contact)
 			print("contacts pulled: \(self.activePeers.count)")
@@ -89,8 +94,9 @@ class DataSource: NSObject {
 		let senderId = senderDetails!["senderId"] as? String
 		let senderName = senderDetails!["senderDisplayName"] as! String
 		let senderImagePath = senderDetails!["senderImagePath"] as! String
+		let senderDeviceName = senderDetails!["senderDeviceName"] as! String
 		
-		let sender = Contact(id: senderId!, name: senderName, image: senderImagePath) as Contact
+		let sender = Contact(id: senderId!, name: senderName, deviceName: senderDeviceName, image: senderImagePath) as Contact
 		
 		return Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId)
 	}

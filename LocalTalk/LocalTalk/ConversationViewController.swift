@@ -16,6 +16,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     var assistant : MCAdvertiserAssistant!
     var session : MCSession!
     var peerID : MCPeerID!
+    var specificIndex: Int!
     
     @IBOutlet weak var collectionview: UICollectionView!
    
@@ -53,29 +54,39 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
-        let conversation = DataSource.sharedInstance.previewConversations[indexPath.row]
+        let message = DataSource.sharedInstance.previewConversations[indexPath.row]
 
         let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
-        let conversationId = conversation.conversationId()
+        let conversationId = message.conversationId()
         
         messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
         messagesCollectionViewController.senderId = "6"
-        messagesCollectionViewController.senderImagePath = conversation.imagePath()
-        messagesCollectionViewController.conversationId = conversation.conversationId()
-        messagesCollectionViewController.isMediaMessage = conversation.isMediaMessage()
-        messagesCollectionViewController.messageHash = conversation.messageHash()
+        messagesCollectionViewController.senderDeviceName = self.peerID.displayName
+        messagesCollectionViewController.senderImagePath = message.imagePath()
+        messagesCollectionViewController.conversationId = message.conversationId()
+        messagesCollectionViewController.isMediaMessage = message.isMediaMessage()
+        messagesCollectionViewController.messageHash = message.messageHash()
         messagesCollectionViewController.messagesRefUrl = "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/messages"
         
         self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
     }
-
+    
+    // MARK: Swipe to delete
+   
+    func deleteCell(sender: UISwipeGestureRecognizer) {        
+        let cell = sender.view as! ConversationCollectionViewCell
+        let name = cell.cellContactName!.text!
+        
+        removeItemByName(name)
+        self.collectionview.reloadData()
+    }
+    
     // MARK: UICollectionViewDataSource method implementation
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
         let cell = collectionView.dequeueReusableCellWithReuseIdentifier("cell", forIndexPath: indexPath) as! ConversationCollectionViewCell
         
-//        let _ : Contact = DataSource.sharedInstance.activePeers[indexPath.row]
-        let message = DataSource.sharedInstance.previewConversations[indexPath.row]
+        let message = previewConversations()[indexPath.row]
         
         let imageName = message.imagePath()
         let contactName = message.senderDisplayName()
@@ -85,11 +96,30 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         cell.cellContactName!.text = contactName
         cell.cellMessagePreview!.text = message.text()
         
+        // Swipe to delete
+        let cSelector = Selector("deleteCell:")
+        let LeftSwipe = UISwipeGestureRecognizer(target: self, action: cSelector)
+        LeftSwipe.direction = UISwipeGestureRecognizerDirection.Left
+        cell.addGestureRecognizer(LeftSwipe)
+        
         return cell
     }
     
     func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return DataSource.sharedInstance.previewConversations.count
+        return previewConversations().count
+    }
+    
+    func previewConversations() -> [Message] {
+        return DataSource.sharedInstance.previewConversations
+    }
+    
+    func removeItemByName(name: String!) {
+        for convo in previewConversations() {
+            if convo.senderDisplayName() == name {
+                let i = previewConversations().indexOf(convo)!
+                DataSource.sharedInstance.removeObjectFromPreviewConversationsAtIndex(i)
+            }
+        }
     }
     
      // MARK: MCBrowserViewControllerDelegate method implementation

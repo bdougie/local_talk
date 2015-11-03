@@ -11,11 +11,13 @@ import UIKit
 class Contact: NSObject {
     var id: String
     var name: String
+    var deviceName: String
     var image: String?
     
-    init(id: String,name: String, image: String?) {
+    init(id: String,name: String, deviceName: String, image: String?) {
         self.id = id
         self.name = name
+        self.deviceName = deviceName
         self.image = image
         super.init()
     }
