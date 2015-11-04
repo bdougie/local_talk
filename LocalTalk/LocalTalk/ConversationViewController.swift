@@ -72,15 +72,27 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     // MARK: Swipe to delete
-   
-    func deleteCell(sender: UISwipeGestureRecognizer) {        
+    func showCloseButton(sender: UISwipeGestureRecognizer) {
         let cell = sender.view as! ConversationCollectionViewCell
-        let name = cell.cellContactName!.text!
+        cell.closeImageButton?.hidden = false
+    }
+    
+    func hideCloseButton(sender: UISwipeGestureRecognizer) {
+        let cell = sender.view as! ConversationCollectionViewCell
+        cell.closeImageButton?.hidden = true
+    }
+   
+    func archiveCell(sender: UIButton) {
+        let i : Int = (sender.layer.valueForKey("index")) as! Int
+        DataSource.sharedInstance.removeObjectFromPreviewConversationsAtIndex(i)
         
-        removeItemByName(name)
         self.collectionview.reloadData()
     }
     
+    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        return previewConversations().count
+    }
+
     // MARK: UICollectionViewDataSource method implementation
     
     func collectionView(collectionView: UICollectionView, cellForItemAtIndexPath indexPath: NSIndexPath) -> UICollectionViewCell {
@@ -96,30 +108,28 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         cell.cellContactName!.text = contactName
         cell.cellMessagePreview!.text = message.text()
         
-        // Swipe to delete
-        let cSelector = Selector("deleteCell:")
+        // Swipe to archive
+        let cSelector = Selector("showCloseButton:")
         let LeftSwipe = UISwipeGestureRecognizer(target: self, action: cSelector)
         LeftSwipe.direction = UISwipeGestureRecognizerDirection.Left
         cell.addGestureRecognizer(LeftSwipe)
         
+        // Swipe to hide archive
+        let hSelector = Selector("hideCloseButton:")
+        let RightSwipe = UISwipeGestureRecognizer(target: self, action: hSelector)
+        RightSwipe.direction = UISwipeGestureRecognizerDirection.Right
+        cell.addGestureRecognizer(RightSwipe)
+        
+        // Close button
+        cell.closeImageButton?.hidden = true
+        cell.closeImageButton?.layer.setValue(indexPath.row, forKey: "index")
+        cell.closeImageButton?.addTarget(self, action: "archiveCell:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         return cell
-    }
-    
-    func collectionView(collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return previewConversations().count
     }
     
     func previewConversations() -> [Message] {
         return DataSource.sharedInstance.previewConversations
-    }
-    
-    func removeItemByName(name: String!) {
-        for convo in previewConversations() {
-            if convo.senderDisplayName() == name {
-                let i = previewConversations().indexOf(convo)!
-                DataSource.sharedInstance.removeObjectFromPreviewConversationsAtIndex(i)
-            }
-        }
     }
     
      // MARK: MCBrowserViewControllerDelegate method implementation

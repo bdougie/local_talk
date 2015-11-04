@@ -33,7 +33,17 @@ class DataSource: NSObject {
 	}
 	
 	func removeObjectFromPreviewConversationsAtIndex(index: Int) {
+		let convo = self.previewConversations[index]
 		self.previewConversations.removeAtIndex(index)
+		self.archiveMessage(convo.conversationId())
+	}
+	
+	func archiveMessage(conversationId: String) {
+ archiveConversationRef(conversationId).childByAppendingPath("hidden").setValue("true")
+	}
+	
+	func archiveConversationRef(conversationId: String) -> Firebase {
+		return  Firebase(url: "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/archive")
 	}
 
 	func setupFirebase() {
@@ -68,11 +78,19 @@ class DataSource: NSObject {
 	func setupConversations(ref: Firebase) {
 		ref.queryOrderedByValue().observeEventType(FEventType.ChildAdded, withBlock: { (convoId) in
 			let conversationKey = convoId.key
+			
+			ref.childByAppendingPath(conversationKey).childByAppendingPath("archive").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (archiveCheck) in
+				
+				let hidden = archiveCheck.value as! NSString
 		
-			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
-				let message = self.createMessageFromSnapshot(snapshot)
-				self.previewConversations.append(message)
-				self.createNotification("conversationsUpdated")
+				ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+					let message = self.createMessageFromSnapshot(snapshot)
+					if ((hidden == "false")) {
+						self.previewConversations.append(message)
+						self.createNotification("conversationsUpdated")
+					}
+				})
+				
 			})
 			
 			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToLast(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in

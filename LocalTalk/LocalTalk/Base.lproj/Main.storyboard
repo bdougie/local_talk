@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pwF-Kd-cKc">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="14F1021" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="pwF-Kd-cKc">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
@@ -67,6 +67,12 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Aig-lD-YHJ">
+                                                    <rect key="frame" x="313" y="0.0" width="52" height="30"/>
+                                                    <state key="normal" title="Archive">
+                                                        <color key="titleColor" red="1" green="0.046319447734534669" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                                    </state>
+                                                </button>
                                             </subviews>
                                             <animations/>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
@@ -86,6 +92,7 @@
                                             <constraint firstAttribute="trailingMargin" relation="greaterThanOrEqual" secondItem="8GK-6s-RgS" secondAttribute="trailing" constant="410" id="b6V-qV-pIi"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="20" id="dzM-OR-CbC"/>
                                             <constraint firstItem="oGn-hZ-TjK" firstAttribute="top" secondItem="Nvc-hV-AKC" secondAttribute="top" id="hkA-3u-6kO"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="Aig-lD-YHJ" secondAttribute="trailing" id="loc-rH-c2U"/>
                                             <constraint firstItem="8GK-6s-RgS" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="19" id="nYK-IU-TFg"/>
                                             <constraint firstItem="oGn-hZ-TjK" firstAttribute="leading" secondItem="Nvc-hV-AKC" secondAttribute="leading" id="ptp-aZ-Tm1"/>
                                             <constraint firstItem="3m0-Sc-u4Q" firstAttribute="leading" secondItem="oGn-hZ-TjK" secondAttribute="trailing" constant="20" id="suJ-PY-0nO"/>
@@ -109,6 +116,7 @@
                                             <outlet property="cellContactName" destination="3m0-Sc-u4Q" id="yhd-4h-Ix3"/>
                                             <outlet property="cellImageView" destination="oGn-hZ-TjK" id="B7y-RT-0dE"/>
                                             <outlet property="cellMessagePreview" destination="8GK-6s-RgS" id="reL-su-DGv"/>
+                                            <outlet property="closeImageButton" destination="Aig-lD-YHJ" id="vWS-Sj-y7c"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

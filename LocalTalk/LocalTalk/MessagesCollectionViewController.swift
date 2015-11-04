@@ -64,7 +64,7 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         ]
         
         messagesRef().childByAutoId().setValue(messageObject)
-//        self.collectionView?.reloadData()
+        self.collectionView?.reloadData()
     }
     
     func generateMessageHash() -> UInt32 {
