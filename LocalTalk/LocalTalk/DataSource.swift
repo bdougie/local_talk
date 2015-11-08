@@ -14,6 +14,7 @@ class DataSource: NSObject {
 	var previewConversations: [Message] = []
 	var conversationMessages: [Message] = []
     var conversationsRef: Firebase!
+	var currentUser: Contact!
 
 	class var sharedInstance :DataSource {
 		struct Static {
@@ -40,6 +41,10 @@ class DataSource: NSObject {
 	
 	func archiveMessage(conversationId: String) {
  archiveConversationRef(conversationId).childByAppendingPath("hidden").setValue("true")
+	}
+	
+	func unarchiveMessage(conversationId: String) {
+		archiveConversationRef(conversationId).childByAppendingPath("hidden").setValue("false")
 	}
 	
 	func archiveConversationRef(conversationId: String) -> Firebase {
@@ -70,8 +75,12 @@ class DataSource: NSObject {
 			
 			let contact = Contact(id: senderId, name: senderName, deviceName: senderDeviceName, image: senderImagePath) as Contact
 			
+			if (contact.deviceName == UIDevice.currentDevice().name) {
+				self.currentUser = contact
+			}
+			
 			self.activePeers.append(contact)
-			print("contacts pulled: \(self.activePeers.count)")
+			self.createNotification("conversationsUpdated")
 		})
 	}
 	
@@ -108,6 +117,7 @@ class DataSource: NSObject {
 		let isMediaMessage = snapshot.value["isMediaMessage"] as? Bool
 		let messageHash = snapshot.value["messageHash"] as? UInt
 		let conversationId = snapshot.value["conversationId"] as! String
+		let timeSent = snapshot.value["time"] as! String
 		
 		let senderId = senderDetails!["senderId"] as? String
 		let senderName = senderDetails!["senderDisplayName"] as! String
@@ -116,6 +126,6 @@ class DataSource: NSObject {
 		
 		let sender = Contact(id: senderId!, name: senderName, deviceName: senderDeviceName, image: senderImagePath) as Contact
 		
-		return Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId)
-	}
+		return Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId, timeSent: timeSent)
+	}	
 }

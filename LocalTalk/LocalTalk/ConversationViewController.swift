@@ -34,13 +34,12 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         
         self.browser.delegate = self;
         startHosting(nil);
-
+        
         self.collectionview.delegate = self
         self.collectionview.dataSource = self
     }
     
     func conversationsUpdated(){
-        print("reloaded preview data");
         self.collectionview.reloadData()
     }
     
@@ -55,18 +54,18 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func collectionView(collectionView: UICollectionView, didSelectItemAtIndexPath indexPath: NSIndexPath) {
         let message = DataSource.sharedInstance.previewConversations[indexPath.row]
-
         let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
         let conversationId = message.conversationId()
         
-        messagesCollectionViewController.senderDisplayName = UIDevice.currentDevice().name
-        messagesCollectionViewController.senderId = "6"
-        messagesCollectionViewController.senderDeviceName = self.peerID.displayName
+        messagesCollectionViewController.currentUser = currentUser()    
+        messagesCollectionViewController.senderDisplayName = message.senderDisplayName()
+        messagesCollectionViewController.senderId = message.senderId()
+        messagesCollectionViewController.senderDeviceName = message.senderDisplayName()
         messagesCollectionViewController.senderImagePath = message.imagePath()
         messagesCollectionViewController.conversationId = message.conversationId()
         messagesCollectionViewController.isMediaMessage = message.isMediaMessage()
         messagesCollectionViewController.messageHash = message.messageHash()
-        messagesCollectionViewController.messagesRefUrl = "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/messages"
+        messagesCollectionViewController.conversationsRefUrl = "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/"
         
         self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
     }
@@ -100,6 +99,9 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         
         let message = previewConversations()[indexPath.row]
         
+        // this will ensure that the organization of messages displaying appear by date and messages sent are sent corrrectly.
+        // this will be needed before I can unarchive any messages
+        
         let imageName = message.imagePath()
         let contactName = message.senderDisplayName()
         let image = UIImage(named: imageName!)
@@ -130,6 +132,10 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     
     func previewConversations() -> [Message] {
         return DataSource.sharedInstance.previewConversations
+    }
+    
+    func currentUser() -> Contact {
+        return DataSource.sharedInstance.currentUser
     }
     
      // MARK: MCBrowserViewControllerDelegate method implementation

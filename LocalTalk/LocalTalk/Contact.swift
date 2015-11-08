@@ -21,5 +21,5 @@ class Contact: NSObject {
         self.image = image
         super.init()
     }
-   
+
 }

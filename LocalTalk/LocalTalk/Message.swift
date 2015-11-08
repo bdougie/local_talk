@@ -18,8 +18,9 @@ class Message: NSObject, JSQMessageData {
     var date_: NSDate
     var imagePath_: String
     var conversationId_: String
+    var timeSent_: String
 
-    init(sender: Contact, isMediaMessage: Bool, messageHash: UInt, text: String, imagePath: String?, conversationId: String) {
+    init(sender: Contact, isMediaMessage: Bool, messageHash: UInt, text: String, imagePath: String?, conversationId: String, timeSent: String) {
         self.text_ = text
         self.senderId_ = sender.id
         self.senderDisplayName_ = sender.name
@@ -28,6 +29,7 @@ class Message: NSObject, JSQMessageData {
         self.messageHash_ = messageHash
         self.imagePath_ = imagePath!
         self.conversationId_ = conversationId
+        self.timeSent_ = timeSent
     }
     
     func text() -> String! {
@@ -60,6 +62,10 @@ class Message: NSObject, JSQMessageData {
     
     func imagePath() -> String? {
         return imagePath_;
+    }
+    
+    func timeSent() -> String? {
+        return timeSent_;
     }
 }
 

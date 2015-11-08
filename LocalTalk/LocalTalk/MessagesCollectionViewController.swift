@@ -28,15 +28,17 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     var batchMessages = true
     var ref: Firebase!
     var refString: String!
-    var messagesRefUrl : String!
+    var conversationsRefUrl : String!
+    var currentUser : Contact!
     
     func messagesRef() -> Firebase {
-        return  Firebase(url: self.messagesRefUrl)
+        let url = "\(self.conversationsRefUrl)/messages"
+        return  Firebase(url: url)
     }
     
     func setupMessages() {
         let conversations = DataSource.sharedInstance.conversationMessages
-        let sortedConversations = conversations.sort({ $0.messageHash() < $1.messageHash() })
+        let sortedConversations = conversations.sort({ $0.timeSent() < $1.timeSent() })
         
         for message in sortedConversations {
             if message.conversationId() == self.conversationId {
@@ -46,36 +48,37 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         self.finishReceivingMessage()
     }
     
-    func sendMessage(text: String!, senderId: String!, senderDisplayName: String!) {
-        // ADD A MESSAGE TO FIREBASE
+    func sendMessage(text: String!, currentUser: Contact) {
         let hash = UInt(self.generateMessageHash())
-        let messageObject = [
+        let messageObject : [ String: AnyObject ] = [
             "text":text,
             "imagePath":senderImagePath,
             "isMediaMessage":self.isMediaMessage,
             "messageHash":hash,
             "sender": [
-                "senderId":senderId,
-                "senderDisplayName":senderDisplayName,
-                "senderImagePath":senderImagePath,
-                "senderDeviceName":senderDeviceName
+                "senderId":currentUser.id,
+                "senderDisplayName":currentUser.name,
+                "senderImagePath":currentUser.image!,
+                "senderDeviceName":currentUser.deviceName
             ],
-            "conversationId":conversationId
+            "conversationId":conversationId,
+            "time":generateDateString()
         ]
         
         messagesRef().childByAutoId().setValue(messageObject)
-        self.collectionView?.reloadData()
+        DataSource.sharedInstance.unarchiveMessage(conversationId)
+        DataSource.sharedInstance.setupConversations(messagesRef())
+    }
+    
+    func generateDateString() -> String {
+        let date = NSDate()
+        return date.description
     }
     
     func generateMessageHash() -> UInt32 {
        return arc4random_uniform(999999)
     }
-    
-    func tempSendMessage(text: String!, sender: Contact) {
-        let message = Message(sender: sender, isMediaMessage: true, messageHash: 1, text: text, imagePath: senderImagePath, conversationId: "1")
-        messages.append(message)
-    }
-    
+
     func setupAvatarImage(name: String, imagePath: String?, incoming: Bool) {
         if let stringUrl = imagePath {
             if let url = NSURL(string: stringUrl) {
@@ -161,10 +164,11 @@ class MessagesCollectionViewController: JSQMessagesViewController {
     
     override func didPressSendButton(button: UIButton!, withMessageText text: String!, senderId: String!, senderDisplayName: String!, date: NSDate!) {
         JSQSystemSoundPlayer.jsq_playMessageSentSound()
-        
-        sendMessage(text, senderId: senderId, senderDisplayName: senderDisplayName)
+                
+        sendMessage(text, currentUser: currentUser)
         
         self.finishSendingMessage()
+        self.collectionView?.reloadData()
     }
     
     override func didPressAccessoryButton(sender: UIButton!) {
