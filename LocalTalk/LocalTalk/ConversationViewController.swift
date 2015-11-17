@@ -48,7 +48,6 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     }
     
     @IBAction func addConversation(sender: UIBarButtonItem) {
-        print("button pressed")
         self.presentViewController(self.browser, animated: true, completion: nil)
     }
     
@@ -60,7 +59,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         messagesCollectionViewController.currentUser = currentUser()    
         messagesCollectionViewController.senderDisplayName = message.senderDisplayName()
         messagesCollectionViewController.senderId = message.senderId()
-        messagesCollectionViewController.senderDeviceName = message.senderDisplayName()
+        messagesCollectionViewController.senderDeviceName = message.senderDeviceName()
         messagesCollectionViewController.senderImagePath = message.imagePath()
         messagesCollectionViewController.conversationId = message.conversationId()
         messagesCollectionViewController.isMediaMessage = message.isMediaMessage()
@@ -70,7 +69,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         self.navigationController!.pushViewController(messagesCollectionViewController, animated: true)
     }
     
-    // MARK: Swipe to delete
+    // MARK: Swipe to archive
     func showCloseButton(sender: UISwipeGestureRecognizer) {
         let cell = sender.view as! ConversationCollectionViewCell
         cell.closeImageButton?.hidden = false
@@ -138,6 +137,29 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         return DataSource.sharedInstance.currentUser
     }
     
+    func transitionToMessage(conversationId: String) {
+        let messagesCollectionViewController = self.storyboard!.instantiateViewControllerWithIdentifier("messages") as! MessagesCollectionViewController
+
+        messagesCollectionViewController.currentUser = currentUser()
+        messagesCollectionViewController.senderDisplayName = currentUser().name
+        messagesCollectionViewController.senderId = currentUser().id
+        messagesCollectionViewController.senderDeviceName = currentUser().deviceName
+        messagesCollectionViewController.senderImagePath = currentUser().image
+        messagesCollectionViewController.isMediaMessage = false
+        messagesCollectionViewController.messageHash = UInt(messagesCollectionViewController.generateMessageHash())
+        messagesCollectionViewController.conversationsRefUrl = "https://resplendent-torch-6823.firebaseio.com/conversations/\(conversationId)/"
+
+        self.navigationController!.presentViewController(messagesCollectionViewController, animated: true, completion: nil)
+    }
+    
+    func createConversation(peerID: MCSession) {
+//        self.collectionview!.reloadData()
+
+        DataSource.sharedInstance.createNewConversation()
+        let conversationId = DataSource.sharedInstance.newConversationId
+        transitionToMessage(conversationId)
+    }
+    
      // MARK: MCBrowserViewControllerDelegate method implementation
     
     func browserViewControllerDidFinish(
@@ -183,7 +205,10 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
     func session(session: MCSession, peer peerID: MCPeerID,
         didChangeState state: MCSessionState)  {
         // Called when a connected peer changes state (for example, goes offline)
-        alertNotification(state, peer: peerID)
+//        alertNotification(state, peer: peerID)
+        if (state == MCSessionState.Connected) {
+            createConversation(session)
+        }
     }
     
     func alertNotification(state: MCSessionState, peer: MCPeerID) {
@@ -219,6 +244,7 @@ class ConversationViewController: UIViewController, MCBrowserViewControllerDeleg
         let mcBrowser = MCBrowserViewController(serviceType: serviceType, session: session)
         mcBrowser.delegate = self
         presentViewController(mcBrowser, animated: true, completion: nil)
+        print("join")
     }
 }
 

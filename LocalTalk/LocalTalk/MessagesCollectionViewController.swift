@@ -62,17 +62,16 @@ class MessagesCollectionViewController: JSQMessagesViewController {
                 "senderDeviceName":currentUser.deviceName
             ],
             "conversationId":conversationId,
-            "time":generateDateString()
+            "time":DataSource.sharedInstance.generateDateString()
         ]
         
         messagesRef().childByAutoId().setValue(messageObject)
         DataSource.sharedInstance.unarchiveMessage(conversationId)
-        DataSource.sharedInstance.setupConversations(messagesRef())
-    }
-    
-    func generateDateString() -> String {
-        let date = NSDate()
-        return date.description
+        
+        let conversations = DataSource.sharedInstance.conversationMessages
+        let sortedConversations = conversations.sort({ $0.timeSent() < $1.timeSent() })
+        let message = sortedConversations.last!
+        self.messages.append(message)
     }
     
     func generateMessageHash() -> UInt32 {
@@ -129,14 +128,6 @@ class MessagesCollectionViewController: JSQMessagesViewController {
         navigationController?.navigationItem.title = "title goes here"
         
         senderDisplayName = (senderDisplayName != nil) ? senderDisplayName : "Anonymous"
-//        let profileImageUrl = user?.providerData["cachedUserProfile"]?["profile_image_url_https"] as? NSString
-//        if let urlString = profileImageUrl {
-//            setupAvatarImage(senderDisplayName, imagePath: urlString as String, incoming: false)
-//            senderImagePath = urlString as String
-//        } else {
-//            setupAvatarColor(senderDisplayName, incoming: false)
-//            senderImagePath = ""
-//        }
         setupAvatarColor(senderDisplayName, incoming: true)
         setupMessages()
     }

@@ -13,6 +13,7 @@ class Message: NSObject, JSQMessageData {
     var text_: String
     var senderId_: String
     var senderDisplayName_: String
+    var senderDeviceName_: String
     var isMediaMessage_: Bool
     var messageHash_: UInt
     var date_: NSDate
@@ -24,6 +25,7 @@ class Message: NSObject, JSQMessageData {
         self.text_ = text
         self.senderId_ = sender.id
         self.senderDisplayName_ = sender.name
+        self.senderDeviceName_ = sender.deviceName
         self.date_ = NSDate()
         self.isMediaMessage_ = isMediaMessage
         self.messageHash_ = messageHash
@@ -46,6 +48,10 @@ class Message: NSObject, JSQMessageData {
     
     func senderDisplayName() -> String! {
         return senderDisplayName_;
+    }
+    
+    func senderDeviceName() -> String! {
+        return senderDeviceName_;
     }
     
     func isMediaMessage() -> Bool {

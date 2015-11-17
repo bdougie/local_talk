@@ -15,6 +15,7 @@ class DataSource: NSObject {
 	var conversationMessages: [Message] = []
     var conversationsRef: Firebase!
 	var currentUser: Contact!
+	var newConversationId: String!
 
 	class var sharedInstance :DataSource {
 		struct Static {
@@ -52,8 +53,7 @@ class DataSource: NSObject {
 	}
 
 	func setupFirebase() {
-		let url =  "https://resplendent-torch-6823.firebaseio.com/conversations"
-		let ref = Firebase(url: url)
+		let ref = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/conversations")
 
 		setupContacts()
 		setupConversations(ref)
@@ -64,8 +64,7 @@ class DataSource: NSObject {
     }
 	
 	func setupContacts() {
-		let url =  "https://resplendent-torch-6823.firebaseio.com/contacts"
-		let ref = Firebase(url: url)
+		let ref = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/contacts")
 		
 		ref.queryLimitedToLast(20).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
 			let senderId = snapshot.value["senderId"] as! String
@@ -87,12 +86,10 @@ class DataSource: NSObject {
 	func setupConversations(ref: Firebase) {
 		ref.queryOrderedByValue().observeEventType(FEventType.ChildAdded, withBlock: { (convoId) in
 			let conversationKey = convoId.key
-			
 			ref.childByAppendingPath(conversationKey).childByAppendingPath("archive").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (archiveCheck) in
 				
 				let hidden = archiveCheck.value as! NSString
-		
-				ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToLast(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
 					let message = self.createMessageFromSnapshot(snapshot)
 					if ((hidden == "false")) {
 						self.previewConversations.append(message)
@@ -101,13 +98,23 @@ class DataSource: NSObject {
 				})
 				
 			})
-			
 			ref.childByAppendingPath(conversationKey).childByAppendingPath("messages").queryLimitedToLast(25).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
 				let message = self.createMessageFromSnapshot(snapshot)
 				self.conversationMessages.append(message)
 				self.createNotification("conversationsUpdated")
 			})
 		})
+	}
+	
+	func createNewConversation() {
+		let ref = Firebase(url: "https://resplendent-torch-6823.firebaseio.com/conversations")
+		let time = generateDateString()
+		
+		ref.childByAutoId().setValue(time)
+
+		ref.queryLimitedToFirst(1).observeEventType(FEventType.ChildAdded, withBlock: { (snapshot) in
+			self.newConversationId = snapshot.key as String!
+		})		
 	}
 	
 	func createMessageFromSnapshot(snapshot: FDataSnapshot) -> Message {
@@ -127,5 +134,10 @@ class DataSource: NSObject {
 		let sender = Contact(id: senderId!, name: senderName, deviceName: senderDeviceName, image: senderImagePath) as Contact
 		
 		return Message(sender: sender, isMediaMessage: isMediaMessage!, messageHash: messageHash!, text: text!, imagePath: imagePath, conversationId: conversationId, timeSent: timeSent)
-	}	
+	}
+	
+	func generateDateString() -> String {
+		let date = NSDate()
+		return date.description
+	}
 }
